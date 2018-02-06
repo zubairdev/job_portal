@@ -1,52 +1,41 @@
 <?php require_once('private/initialize.php'); ?>
 <?php
-$msg = "";
 
-if (isset($_POST['submit1'])) {
-	$u_fname = $_POST['u_fname'];
-	$u_email = $_POST['u_email'];
-	$u_name = $_POST['u_name'];
-	$u_pass = md5($_POST['u_pass']);
-	$u_status = 2;
-	$u_active = 0;
+		// Code Start Here
 
-	$sql = "INSERT INTO user (u_name, u_username, u_pass, u_email, u_status, u_active) VALUES ('$u_fname','$u_name','$u_pass','$u_email','$u_status','$u_active')";
-	$run = mysqli_query($con, $sql);
+if (is_post_request()) {
 
-	if ($run) {
-		$msg = "<div class='alert alert-success'>
-  <strong>$u_fname!</strong> You are Signup sucessfully.
-</div>";
-header('refresh: 5; url=create_resume.php');
+	if (isset($_POST['submit1'])) {
+
+		$candidate = [];
+		$candidate['u_fname'] = $_POST['u_fname'] ?? '';
+		$candidate['u_email'] = $_POST['u_email'] ?? '';
+		$candidate['u_name'] = $_POST['u_name'] ?? '';
+		$candidate['u_pass'] = $_POST['u_pass'] ?? '';
+		$candidate['u_status'] = 2;
+		$candidate['u_active'] = 1;
+
+		$result = insert_candidate($candidate);
+		if ($result === true) {
+			$new_id = mysqli_insert_id($db);
+			redirect_to('index.php');
+		}
 
 	}
-	else{
-		$msg ="<div class='alert alert-danger'> <strong>MySQL Error!</strong>". mysqli_error($con) ."</div>";
-	}
+
+} else {
+	$candidate = [];
+	$candidate['u_fname'] = '';
+	$candidate['u_email'] = '';
+	$candidate['u_name'] = '';
+	$candidate['u_pass'] = '';
+	$candidate['u_status'] = '';
+	$candidate['u_active'] = '';
+
 }
 
-if (isset($_POST['submit2'])) {
-	$u_fname = $_POST['com_fname'];
-	$u_email = $_POST['com_email'];
-	$u_name = $_POST['com_name'];
-	$u_pass = md5($_POST['com_pass']);
-	$u_status = 3;
-	$u_active = 0;
+		// Code ended Here
 
-	$sql = "INSERT INTO user (u_name, u_username, u_pass, u_email, u_status, u_active) VALUES ('$u_fname','$u_name','$u_pass','$u_email','$u_status','$u_active')";
-	$run = mysqli_query($con, $sql);
-
-	if ($run) {
-		$msg = "<div class='alert alert-success'>
-  <strong>$u_fname! </strong>Your Company Signup sucessfully.
-</div>";
-header('refresh: 5; url=add_company.php');
-
-	}
-	else{
-		$msg ="<div class='alert alert-danger'> <strong>MySQL Error!</strong>". mysqli_error($con) ."</div>";
-	}
-}
 
 ?>
 
@@ -74,7 +63,7 @@ header('refresh: 5; url=add_company.php');
 							</ul>
 							<div class="tab-content">
 								<div class="tab-pane fade active in" id="candidate">
-									<?php echo $msg; ?>
+									<?php // echo $msg; ?>
 									<form id="candidate" method="post" action="">
 										<div class="form-group">
 											<label> Full Name</label>
