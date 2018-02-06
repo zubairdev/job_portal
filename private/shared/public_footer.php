@@ -92,5 +92,9 @@
 
 <?php include(PROJECT_PATH . '/config/js.php'); ?>
 
+<?php
+  db_disconnect($db);
+?>
+
 </body>
 </html>

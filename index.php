@@ -1,6 +1,8 @@
-<?php require_once('private/initialize.php'); ?>
+<?php require_once('private/initialize.php');
 
-<?php include(SHARED_PATH . '/public_header.php'); ?>
+include(SHARED_PATH . '/public_header.php');
+
+?>
 
 <div class="site-banner">
 	<div class="container">

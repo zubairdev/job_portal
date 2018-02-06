@@ -38,9 +38,9 @@ if (isset($_POST['submit2'])) {
 
 	if ($run) {
 		$msg = "<div class='alert alert-success'>
-  <strong>$u_fname!</strong>Your Company Signup sucessfully.
+  <strong>$u_fname! </strong>Your Company Signup sucessfully.
 </div>";
-header('refresh: 5; url=candidates.php');
+header('refresh: 5; url=add_company.php');
 
 	}
 	else{
@@ -69,7 +69,7 @@ header('refresh: 5; url=candidates.php');
 					<div id="form">
 						<div id="userform">
 							<ul class="nav nav-tabs nav-justified" role="tablist">
-								<li class="active border-right"><a href="#candidate"  role="tab" data-toggle="tab">Condidate</a></li>
+								<li class="active border-right"><a href="#candidate"  role="tab" data-toggle="tab">Candidate</a></li>
 								<li><a href="#company" role="tab" data-toggle="tab">Company</a></li>
 							</ul>
 							<div class="tab-content">

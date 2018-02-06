@@ -78,17 +78,10 @@
                             </div>
                         </nav>  
                     </div>
-                    <?php if (isset($_SESSION['username'])) { ?>
-                            <div class="col-md-3 text-right">
-                            <a href="login.php" class="login active"><?php echo $_SESSION['username']; ?></a>
-                            <a href="userout.php" class="signup">Logout</a>
+                    <div class="col-md-3 text-right">
+                                <a href="login.php" class="login active"><?php echo $_SESSION['username']; ?></a>
+                                <a href="userout.php" class="signup">Logout</a>
                             </div>
-                        <?php } else { ?> 
-                            <div class="col-md-3 text-right">
-                                <a href="login.php" class="login active">Login</a>
-                                <a href="signup.php" class="signup">Sign Up</a>
-                            </div>
-                            <?php } ?>
                         </div>
                     </div>
                 </div>
