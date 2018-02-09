@@ -18,7 +18,39 @@ if (is_post_request()) {
 		$result = insert_candidate($candidate);
 		if ($result === true) {
 			$new_id = mysqli_insert_id($db);
-			redirect_to('index.php');
+			
+				// Creating Session
+			$email = $candidate['u_email'];
+			$user = find_user_by_email($email);
+			log_in_user($user);
+
+			$_SESSION['message'] = 'You have successfully created an account.';
+			redirect_to('c_resume.php');
+		}
+
+	}
+
+	if (isset($_POST['submit2'])) {
+
+		$company = [];
+		$company['com_fname'] = $_POST['com_fname'] ?? '';
+		$company['com_email'] = $_POST['com_email'] ?? '';
+		$company['com_name'] = $_POST['com_name'] ?? '';
+		$company['com_pass'] = $_POST['com_pass'] ?? '';
+		$company['u_status'] = 3;
+		$company['u_active'] = 1;
+
+		$result = insert_company($company);
+		if ($result === true) {
+			$new_id = mysqli_insert_id($db);
+
+				// Creating Session
+			$email = $company['com_email'];
+			$user = find_user_by_email($email);
+			log_in_user($user);			
+
+			$_SESSION['message'] = 'You have successfully created an account.';
+			redirect_to('add_company.php');
 		}
 
 	}

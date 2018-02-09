@@ -1,27 +1,64 @@
 <?php require_once('private/initialize.php');
 
-if(isset($_SESSION['username'])) {
-  header("location: index.php");
+$errors = [];
+$email = '';
+$password = '';
+
+if(is_post_request()) {
+
+  $email = $_POST['email'] ?? '';
+  $password = $_POST['password'] ?? '';
+
+  // if there were no errors, try to login
+  if(empty($errors)) {
+    // Using one variable ensures that msg is the same
+    // $login_failure_msg = "Log in was unsuccessful.";
+
+    $user = find_user_by_email($email);
+    if($user) {
+
+      if(password_verify($password, $user['u_pass'])) {
+        // password matches
+        log_in_user($user);
+        redirect_to('index.php');
+      } else {
+        // username found, but password does not match
+        // $errors[] = $login_failure_msg;
+        echo "<script>alert('login unsucessful')</script>";
+      }
+
+    } else {
+      // no username found
+      // $errors[] = $login_failure_msg;
+      echo "<script>alert('login unsucessfulllllllllll')</script>";
+    }
+
+  }
+
 }
 
-if(isset($_POST['login_btn'])) {
-$email = mysqli_real_escape_string($db, $_POST['email']);
-$password = mysqli_real_escape_string($db, md5($_POST['password']));
-  $user = "SELECT * FROM user WHERE u_email ='$email' AND u_pass ='$password'";
-  $run_user = mysqli_query($db, $user);
-  $check_user = mysqli_num_rows($run_user);
+// if(isset($_SESSION['username'])) {
+//   header("location: index.php");
+// }
+
+// if(isset($_POST['login_btn'])) {
+// $email = mysqli_real_escape_string($db, $_POST['email']);
+// $password = mysqli_real_escape_string($db, md5($_POST['password']));
+//   $user = "SELECT * FROM user WHERE u_email ='$email' AND u_pass ='$password'";
+//   $run_user = mysqli_query($db, $user);
+//   $check_user = mysqli_num_rows($run_user);
              
-  if($check_user==0) {
-    echo "<script>alert('Your Emial and Password is Wrong!')</script>";
+//   if($check_user==0) {
+//     echo "<script>alert('Your Emial and Password is Wrong!')</script>";
                
-  }
-    else {
-      $row= mysqli_fetch_array($run_user);
-      $name =$row['u_name'];
-      $_SESSION['username'] = $name;
-      header("location: index.php");
-    }
-}
+//   }
+//     else {
+//       $row= mysqli_fetch_array($run_user);
+//       $name =$row['u_name'];
+//       $_SESSION['username'] = $name;
+//       header("location: index.php");
+//     }
+// }
 
 
 ?>

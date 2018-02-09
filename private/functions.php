@@ -33,4 +33,19 @@ function is_get_request() {
 	return $_SERVER['REQUEST_METHOD'] == 'GET';
 }
 
+function get_and_clear_session_message() {
+  if(isset($_SESSION['message']) && $_SESSION['message'] != '') {
+    $msg = $_SESSION['message'];
+    unset($_SESSION['message']);
+    return $msg;
+  }
+}
+
+function display_session_message() {
+  $msg = get_and_clear_session_message();
+  if(!is_blank($msg)) {
+    return "<div id='message' class='alert alert-success'>" . $msg . "</div>";
+  }
+}
+
 ?>

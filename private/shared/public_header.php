@@ -78,9 +78,9 @@
                             </div>
                         </nav>  
                     </div>
-                    <?php if (isset($_SESSION['username'])) { ?>
+                    <?php if (isset($_SESSION['u_username'])) { ?>
                             <div class="col-md-3 text-right">
-                            <a href="login.php" class="login active"><?php echo $_SESSION['username']; ?></a>
+                            <a href="login.php" class="login active"><?php echo $_SESSION['u_username']; ?></a>
                             <a href="userout.php" class="signup">Logout</a>
                             </div>
                         <?php } else { ?> 
@@ -94,6 +94,8 @@
                 </div>
 
                 <!-- Top Navigation Bar End -->
+
+                <?php echo display_session_message(); ?>
         
                 
 

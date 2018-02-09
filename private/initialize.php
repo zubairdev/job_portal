@@ -9,13 +9,15 @@
 	define("SHARED_PATH", PRIVATE_PATH . '/shared' );
 
 
-	$public_end = strpos($_SERVER['SCRIPT_NAME'], '/job_portal') + 11;
+	$public_end = strpos($_SERVER['SCRIPT_NAME'], '/job_portall') + 12;
   	$doc_root = substr($_SERVER['SCRIPT_NAME'], 0, $public_end);
   	define("WWW_ROOT", $doc_root);
 
   	require_once('functions.php');
   	require_once('database.php');
   	require_once('query_functions.php');
+  	require_once('validation_functions.php');
+  	require_once('auth_functions.php');
 
   	$db = db_connect();
 

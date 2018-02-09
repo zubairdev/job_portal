@@ -63,70 +63,7 @@
 						</div>
 						<div class="form-group col-md-12 p-l p-r">
 							<label>Job Description</label>
-							<div id="wysihtml5-editor-toolbar">
-								<header>
-									<ul class="commands">
-										<li data-wysihtml5-command="bold" title="Make text bold (CTRL + B)" class="command"></li>
-										<li data-wysihtml5-command="italic" title="Make text italic (CTRL + I)" class="command"></li>
-										<li data-wysihtml5-command="insertUnorderedList" title="Insert an unordered list" class="command"></li>
-										<li data-wysihtml5-command="insertOrderedList" title="Insert an ordered list" class="command"></li>
-										<li data-wysihtml5-command="createLink" title="Insert a link" class="command"></li>
-										<li data-wysihtml5-command="insertImage" title="Insert an image" class="command"></li>
-										<li data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" title="Insert headline 1" class="command"></li>
-										<li data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" title="Insert headline 2" class="command"></li>
-										<li data-wysihtml5-command-group="foreColor" class="fore-color command" title="Color the selected text" >
-											<ul>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="silver"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="gray"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="maroon"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="red"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="purple"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="green"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="olive"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="navy"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="blue"></li>
-											</ul>
-										</li>
-										<li data-wysihtml5-command="insertSpeech" title="Insert speech" class="command"></li>
-										<li data-wysihtml5-action="change_view" title="Show HTML" class="action"></li>
-									</ul>
-								</header>
-								<div data-wysihtml5-dialog="createLink" style="display: none;">
-									<label>
-										Link:
-										<input data-wysihtml5-dialog-field="href" value="http://">
-									</label>
-									<a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
-								</div>
-								<div data-wysihtml5-dialog="insertImage" style="display: none;">
-									<label>
-										Image:
-										<input data-wysihtml5-dialog-field="src" value="http://">
-									</label>
-									<a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
-								</div>
-							</div>
-							<textarea id="wysihtml5-editor" spellcheck="false" autofocus placeholder="Enter something ...">
-								<h1>A better approach to rich text editing</h1>
-								<p>wysihtml5 is an <span class="wysiwyg-color-green"><a href="#">open source</a></span> rich text editor based on HTML5 technology and the progressive-enhancement approach.
-								It uses a sophisticated security concept and aims to generate fully valid HTML5 markup by preventing unmaintainable tag soups and inline styles.</p>
-								<h2>Features</h2>
-								<ul>
-									<li>It's fast and lightweight (smaller than TinyMCE, Aloha, ...)</li>
-									<li>Auto-linking of urls as-you-type</li>
-									<li>Generates valid and semantic HTML5 markup (even when the content is pasted from MS Word)</li>
-									<li>Uses class names instead of inline styles</li>
-									<li>Unifies line break handling across browsers</li>
-									<li>Uses sandboxed iframes in order to prevent identity theft through XSS</li>
-									<li>Speech-input for Chrome</li>
-									<li>No jQuery required</li>
-								</ul>
-								<h2>Browser Support</h2>
-								<ul>
-
-									<li><strong>Graceful degradation:</strong> Unsupported browsers will get a <i>&amp;lt;textarea&amp;gt;</i></li>
-								</ul>
-							</textarea>
+							 <textarea name="editor1" class="form-control" placeholder="Page Body"></textarea>
 						</div>
 						<div class="form-group col-md-6 p-l">
 							<label>Application Email/URL</label>
@@ -213,7 +150,10 @@
 		</div>
 	</section>
 </main>
-
+<script src="http://cdn.ckeditor.com/4.6.1/standard/ckeditor.js"></script>
+<script>
+	CKEDITOR.replace( 'editor1' );
+</script>
 <!-- <script type="text/javascript" src="js/wysihtml.js"></script>
 <script type="text/javascript" src="js/wysihtml5-0.3.0.js"></script>
 <script type="text/javascript" src="js/file.js"></script> -->
