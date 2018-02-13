@@ -10,7 +10,7 @@ if (isset($_GET['company'])) {
     $session_id = $_SESSION['u_id'];
 
 
-    $sql = "SELECT * FROM company WHERE user_id=$session_id";
+    $sql = "SELECT * FROM company WHERE c_id = $id";
     $result = mysqli_query($db, $sql);
     $row = mysqli_fetch_assoc($result);
     $c_u_id = $row['user_id'];
@@ -28,7 +28,10 @@ if (isset($_GET['company'])) {
         redirect_to(url_for('candidates.php'));
     } // if result not match
     
+} else {
+	redirect_to(url_for('index.php'));
 }
+
 ?> 
 
 
@@ -55,18 +58,18 @@ if (isset($_GET['company'])) {
 						<div class="job_title">
 							<?php echo $company['c_name']; ?>
 						</div> 
-						<a href="<?php echo $company['c_fb']; ?>" target="_blank" class="user-media"><i class="fa fa-facebook"></i></a>
-						<a href="<?php echo $company['c_twitter']; ?>" target="_blank" class="user-media twitter"><i class="fa fa-twitter"></i></a>
-						<a href="<?php echo $company['c_linkedin']; ?>" target="_blank" class="user-media linke"><i class="fa fa-linkedin"></i></a>
-						<a href="<?php echo $company['c_gplus']; ?>" target="_blank" class="user-media google"><span class="ti-google"></span></a>
+						<a href="<?php echo http_check($company['c_fb']); ?>" target="_blank" class="user-media"><i class="fa fa-facebook"></i></a>
+						<a href="<?php echo 'https://www.twitter.com/' . $company['c_twitter']; ?>" target="_blank" class="user-media twitter"><i class="fa fa-twitter"></i></a>
+						<a href="<?php echo http_check($company['c_linkedin']); ?>" target="_blank" class="user-media linke"><i class="fa fa-linkedin"></i></a>
+						<a href="<?php echo http_check($company['c_gplus']); ?>" target="_blank" class="user-media google"><span class="ti-google"></span></a>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="contact_details">
 						<span><i class="fa fa-map"></i> <?php echo $company['c_address']; ?></span>
 						<span><i class="fa fa-phone"></i><?php echo"+92-".$company['c_phone']; ?></span>
-						<span><i class="fa fa-envelope"></i><a href="#"><?php echo $company['c_email']; ?></a></span>
-						<span><i class="fa fa-globe"></i><a href="<?php echo $company['c_web']; ?>"><?php echo $company['c_web']; ?></a></span>
+						<span><i class="fa fa-envelope"></i><a href="<?php echo 'mailto:' . $company['c_email'] ?>"><?php echo $company['c_email']; ?></a></span>
+						<span><i class="fa fa-globe"></i><a target="_blank" href="<?php echo http_check($company['c_web']); ?>"><?php echo $company['c_web']; ?></a></span>
 					</div>
 				</div>
 			</div>
