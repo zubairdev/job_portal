@@ -2,45 +2,38 @@
 
 require_login();
 
-if(isset($_SESSION['u_id'])){
+if (isset($_GET['id'])) {
 
-    $name = $_SESSION['u_id'];
-if(isset($_GET['id'])){
-    $id = $_GET['id'];
+    $id = $_GET['id']; // user signup id
+    // $for_redirect = $id;
+    $session_id = $_SESSION['u_id'];
 
-    $sql = "SELECT * FROM resume WHERE u_id == $name";
+    $sql = "SELECT * FROM resume ";
+    $sql .= "WHERE r_id='" . db_escape($db, $id) . "' ";
     $result = mysqli_query($db, $sql);
-    if($result){
-        $row = mysqli_fetch_array($result);
-            $n_name = $row['r_fname'];
-            $n_id = $row['u_id'];
-
-            if ($name == $n_id) {
-                $resume = find_resume_by_id($id);
-            } else {
-        // redirect_to(url_for('manage_jobs.php'));
-
-        echo $name;
-        echo $n_id;
+    if ($result) {
+        $row = mysqli_fetch_assoc($result);
+        $resume_u_id = $row['u_id'];
     }
-        
-        echo "Successfully found ";
+
+    // Now take out exact match result
+
+    if ($session_id == $resume_u_id) {
+        $resume = find_resume_by_id($id);
     } else {
-        echo "Eroor Oye";
-    }
+        redirect_to(url_for('candidates.php'));
+    } // if result not match
 
-    
+    /*echo 'URL ID: ' . $id . '<br>'; // from resume table
+    echo 'Session ID: ' . $session_id . '<br>'; // from user table (Session)
+    echo 'Resume U_ID: ' . $resume_u_id . '<br>'; // from resume table
+    echo $resume_fname . '<br>';
+    echo $resume_lname . '<br>';*/
 
-
-    // if ($name == $n_id) {
-       
-    // } else {
-    //     redirect_to(url_for('manage_jobs.php'));    
-    // }  
- }  
 } else {
+
     redirect_to(url_for('index.php'));
-}
+} // if $_GET['id'] is not set
 
 
 include(SHARED_PATH . '/public_header.php');
@@ -51,7 +44,7 @@ include(SHARED_PATH . '/public_header.php');
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12 text-center">
-                                <div class="banner-heading">Resume Paage <?php echo $n_name . $n_id; ?></div>    
+                                <div class="banner-heading">Resume Paage</div>    
                             </div>  
                         </div>
                     </div>

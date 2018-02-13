@@ -6,7 +6,7 @@ function insert_resume($resume) {
     $sql = "INSERT INTO  resume";
     $sql .= "(u_id, r_fname, r_lname, r_title, r_email, r_phn, r_dob, r_addr, r_photo, r_job_title, r_job_type, r_postion, r_yearExp, r_jobcat, r_exptsalry, r_skills, r_despt, r_edu1, r_splztn, r_inst1, r_year1, r_grade, r_mark1, r_inst2, r_edu2, r_mark2, r_year2, r_inst3, r_edu3, r_mark3, r_year3) ";
     $sql .= "VALUES (";
-    $sql .= "'" . db_escape($db, $resume['user_id']) . "',";
+    $sql .= "'" . db_escape($db, $resume['u_id']) . "',";
     $sql .= "'" . db_escape($db, $resume['r_fname']) . "',";
     $sql .= "'" . db_escape($db, $resume['r_lname']) . "',";
     $sql .= "'" . db_escape($db, $resume['r_title']) . "',";
@@ -50,7 +50,19 @@ function insert_resume($resume) {
     }
 }
 
-function insert_candidate($candidate) {
+function find_resume_by_id($id) {
+    global $db;
+
+    $sql = "SELECT * FROM resume ";
+    $sql .= "WHERE r_id ='" . db_escape($db, $id) . "' ";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    $resume = mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+    return $resume; // returns an assoc. array
+}
+
+function candidate_sign_up($candidate) {
 	global $db;
 
 	$hashed_password = password_hash($candidate['u_pass'], PASSWORD_BCRYPT);
@@ -76,7 +88,7 @@ function insert_candidate($candidate) {
 	}
 }
 
-function insert_company($company) {
+function company_sign_up($company) {
 	global $db;
 
 	$hashed_password = password_hash($company['com_pass'], PASSWORD_BCRYPT);
@@ -115,16 +127,49 @@ function find_user_by_email($email) {
     return $user; // returns an assoc. array
 }
 
-function find_resume_by_id($id) {
+function insert_company($company) {
     global $db;
 
-    $sql = "SELECT * FROM resume ";
-    $sql .= "WHERE r_id ='" . db_escape($db, $id) . "' ";
+    $sql = "INSERT INTO company ";
+    $sql .= "(user_id, c_name, c_address, c_email, c_phone, c_web, photo, c_fb, c_twitter, c_linkedin, c_gplus, c_description, c_business, c_wwd) ";
+    $sql .= "VALUES (";
+    $sql .= "'" . db_escape($db, $company['user_id']) . "',";
+    $sql .= "'" . db_escape($db, $company['c_name']) . "',";
+    $sql .= "'" . db_escape($db, $company['c_address']) . "',";
+    $sql .= "'" . db_escape($db, $company['c_email']) . "',";
+    $sql .= "'" . db_escape($db, $company['c_phone']) . "',";
+    $sql .= "'" . db_escape($db, $company['c_web']) . "',";
+    $sql .= "'" . db_escape($db, $company['photo']) . "',";
+    $sql .= "'" . db_escape($db, $company['c_fb']) . "',";
+    $sql .= "'" . db_escape($db, $company['c_twitter']) . "',";
+    $sql .= "'" . db_escape($db, $company['c_linkedin']) . "',";
+    $sql .= "'" . db_escape($db, $company['c_gplus']) . "',";
+    $sql .= "'" . db_escape($db, $company['c_description']) . "',";
+    $sql .= "'" . db_escape($db, $company['c_business']) . "',";
+    $sql .= "'" . db_escape($db, $company['c_wwd']) . "'";
+    $sql .= ")";
+
+    $result = mysqli_query($db, $sql);
+    if ($result) {
+        return true;
+    } else {
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+    }
+}
+
+function find_company_by_id($id) {
+    global $db;
+
+    $sql = "SELECT * FROM company ";
+    $sql .= "WHERE c_id='" . db_escape($db, $id) . "'";
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
-    $resume = mysqli_fetch_assoc($result);
+    $company = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
-    return $resume; // returns an assoc. array
+    return $company; // returns an assoc. array
+
 }
 
 

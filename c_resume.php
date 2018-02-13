@@ -1,17 +1,32 @@
-<?php require_once('private/initialize.php'); 
+<?php require_once('private/initialize.php');
+
+require_login();
+
 include(SHARED_PATH . '/public_header.php');
+	
+	// usre.r_id and resume.u_id will be same
+    $session_id = $_SESSION['u_id'];
 
-	$user = $_SESSION['u_username'];
-    $sql = "SELECT * FROM user WHERE u_username='$user'";
-    $run = mysqli_query($db, $sql); 
-    $row = mysqli_fetch_array($run);
-    $user_id = $row['u_id'];
-
+    // candidate can create resume once
+    $sql = "SELECT * FROM resume WHERE u_id = $session_id";
+	$run = mysqli_query($db, $sql);
+	$row = mysqli_fetch_array($run);
+	$user_id = $row['r_id'];
+	$check = $row['r_check'];
+	echo "value: " . $check ."<br>";
+	echo "Id of : " . $user_id;
+	
+	if($check == 'insert'){
+		header("location: resume.php?id=$user_id ");
+	} elseif ($check == 'empty') {
+		header("location: post_job.php");
+	}
+	
 if(is_post_request()) {
-	if (isset($_FILES['photo'])){
 
 		$resume = [];
-		$resume['user_id'] = $user_id ?? '';
+		
+		$resume['u_id'] = $session_id ?? '';
 		$resume['r_fname'] = $_POST['Fname'] ?? '';
 		$resume['r_lname'] = $_POST['Lname'] ?? '';
 		$resume['r_title'] = $_POST['title'] ?? '';
@@ -59,7 +74,6 @@ if(is_post_request()) {
 		} else {
 			echo "Error: ";
 		}
-	}
 
 } else {
 

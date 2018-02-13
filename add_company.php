@@ -1,13 +1,68 @@
-<?php require_once('private/initialize.php'); ?>
+<?php require_once('private/initialize.php');
 
-<?php include(SHARED_PATH . '/public_header.php'); ?>
+require_login();
+$session_id = $_SESSION['u_id'];
+if (is_post_request()) {
+
+	$company = [];
+	$company['user_id'] = $session_id ?? '';
+	$company['c_name'] = $_POST['c_name'] ?? '';
+	$company['c_address'] = $_POST['c_address'] ?? '';
+	$company['c_email'] = $_POST['c_email'] ?? '';
+	$company['c_phone'] = $_POST['c_phone'] ?? '';
+	$company['c_web'] = $_POST['c_web'] ?? '';
+	$company['c_fb'] = $_POST['c_fb'] ?? '';
+	$company['c_twitter'] = $_POST['c_twitter'] ?? '';
+	$company['c_linkedin'] = $_POST['c_linkedin'] ?? '';
+	$company['c_gplus'] = $_POST['c_gplus'] ?? '';
+	$company['c_description'] = $_POST['c_description'] ?? '';
+	$company['c_business'] = $_POST['c_business'] ?? '';
+	$company['c_wwd'] = $_POST['c_wwd'] ?? '';
+
+	$photo = $_FILES['photo']['name'];
+	$tmp_name= $_FILES['photo']['tmp_name'];
+	$local_image = "images/company/logo/";
+	$upload=move_uploaded_file($tmp_name, $local_image . $photo);
+
+	$company['photo'] = $photo;
+
+	$result = insert_company($company);
+	if ($result === true) {
+		$new_id = mysqli_insert_id($db);
+		$_SESSION['message'] = "Your Company has been Added Successfully";
+		redirect_to(url_for('employer_detail.php?company=' . $new_id));
+	} else {
+		echo "Error: ....... ";
+	}
+} else {
+
+	$company = [];
+	$company['c_name'] = '';
+	$company['c_address'] = '';
+	$company['c_email'] = '';
+	$company['c_phone'] = '';
+	$company['c_web'] = '';
+	$company['photo'] = '';
+	$company['c_fb'] = '';
+	$company['c_twitter'] = '';
+	$company['c_linkedin'] = '';
+	$company['c_gplus'] = '';
+	$company['c_description'] = '';
+	$company['c_business'] = '';
+	$company['c_wwd'] = '';
+
+}
+
+include(SHARED_PATH . '/public_header.php');
+
+?>
 
 <div class="page_banner banner post-banner">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 text-center">
-				<div class="banner-heading">Create your Profile</div>    
-			</div>  
+				<div class="banner-heading">Create your Profile</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -25,263 +80,81 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="panel-body">
-						<!-- <div class="panel-heading">Job Details</div>
-						<hr>
-						<div class="form-group col-md-6 p-l">
-							<label>Email</label>
-							<input type="text" class="form-control">
-						</div>
-						<div class="form-group col-md-6 p-r">
-							<label>Job Title</label>
-							<input type="text" class="form-control" />
-						</div>
-						<div class="form-group col-md-6 p-l">
-							<label>Job Type</label>
-							<select class="form-control">
-								<option>--- Choose a Category ---</option>
-								<option>IT</option>
-								<option>IT</option>
-								<option>IT</option>
-							</select>
-						</div>
-						<div class="form-group col-md-6 p-r">
-							<label>Job Category</label>
-							<select class="form-control">
-								<option>--- Choose a Category ---</option>
-								<option>IT</option>
-								<option>IT</option>
-								<option>IT</option>
-							</select>
-						</div>
-						<div class="form-group col-md-6 p-l">
-							<label>Job Tags <span>(Optional)</span></label>
-							<input type="text" class="form-control" placeholder="eg. Designer, Developer, HTML" />
-						</div>
-						<div class="form-group col-md-6 p-r">
-							<label>Location <span>(Optional)</span></label>
-							<input type="text" class="form-control" />
-						</div>
-						<div class="form-group col-md-12 p-l p-r">
-							<label>Job Description</label>
-							<div id="wysihtml5-editor-toolbar">
-								<header>
-									<ul class="commands">
-										<li data-wysihtml5-command="bold" title="Make text bold (CTRL + B)" class="command"></li>
-										<li data-wysihtml5-command="italic" title="Make text italic (CTRL + I)" class="command"></li>
-										<li data-wysihtml5-command="insertUnorderedList" title="Insert an unordered list" class="command"></li>
-										<li data-wysihtml5-command="insertOrderedList" title="Insert an ordered list" class="command"></li>
-										<li data-wysihtml5-command="createLink" title="Insert a link" class="command"></li>
-										<li data-wysihtml5-command="insertImage" title="Insert an image" class="command"></li>
-										<li data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" title="Insert headline 1" class="command"></li>
-										<li data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" title="Insert headline 2" class="command"></li>
-										<li data-wysihtml5-command-group="foreColor" class="fore-color command" title="Color the selected text" >
-											<ul>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="silver"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="gray"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="maroon"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="red"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="purple"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="green"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="olive"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="navy"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="blue"></li>
-											</ul>
-										</li>
-										<li data-wysihtml5-command="insertSpeech" title="Insert speech" class="command"></li>
-										<li data-wysihtml5-action="change_view" title="Show HTML" class="action"></li>
-									</ul>
-								</header>
-								<div data-wysihtml5-dialog="createLink" style="display: none;">
-									<label>
-										Link:
-										<input data-wysihtml5-dialog-field="href" value="http://">
-									</label>
-									<a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
-								</div>
-								<div data-wysihtml5-dialog="insertImage" style="display: none;">
-									<label>
-										Image:
-										<input data-wysihtml5-dialog-field="src" value="http://">
-									</label>
-									<a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
-								</div>
-							</div>
-							<textarea id="wysihtml5-editor" spellcheck="false" autofocus placeholder="Enter something ...">
-								<h1>A better approach to rich text editing</h1>
-								<p>wysihtml5 is an <span class="wysiwyg-color-green"><a href="#">open source</a></span> rich text editor based on HTML5 technology and the progressive-enhancement approach.
-								It uses a sophisticated security concept and aims to generate fully valid HTML5 markup by preventing unmaintainable tag soups and inline styles.</p>
-								<h2>Features</h2>
-								<ul>
-									<li>It's fast and lightweight (smaller than TinyMCE, Aloha, ...)</li>
-									<li>Auto-linking of urls as-you-type</li>
-									<li>Generates valid and semantic HTML5 markup (even when the content is pasted from MS Word)</li>
-									<li>Uses class names instead of inline styles</li>
-									<li>Unifies line break handling across browsers</li>
-									<li>Uses sandboxed iframes in order to prevent identity theft through XSS</li>
-									<li>Speech-input for Chrome</li>
-									<li>No jQuery required</li>
-								</ul>
-								<h2>Browser Support</h2>
-								<ul>
-
-									<li><strong>Graceful degradation:</strong> Unsupported browsers will get a <i>&amp;lt;textarea&amp;gt;</i></li>
-								</ul>
-							</textarea>
-						</div>
-						<div class="form-group col-md-6 p-l">
-							<label>Application Email/URL</label>
-							<input type="text" class="form-control" placeholder="Enter your email address or website URL" />
-						</div>
-						<div class="form-group col-md-6 p-r">
-							<label>Minimum Rate Per Hour <span>(Optional)</span></label>
-							<input type="text" class="form-control" placeholder="eg $ 10" />
-						</div>
-						<div class="form-group col-md-6 p-l">
-							<label>Minimum Rate Per Hour <span>(Optional)</span></label>
-							<input type="text" class="form-control" placeholder="eg $ 16" />
-						</div>
-						<div class="form-group col-md-6 p-r">
-							<label>Minimum Salery <span>(Optional)</span></label>
-							<input type="text" class="form-control" placeholder="eg $ 2500" />
-						</div>
-						<div class="form-group col-md-6 p-l">
-							<label>Maximun Salery <span>(Optional)</span></label>
-							<input type="text" class="form-control" placeholder="eg $ 4500" />
-						</div>
-						<div class="form-group col-md-6 p-r">
-							<label>Hours Per Week <span>(Optional)</span></label>
-							<input type="text" class="form-control" placeholder="eg $ 45" />
-						</div> -->
-
 						<div class="borderfull-width"></div>
 						<div class="panel-heading">Company Information</div>
 						<hr>
+						<form method="post" action="add_company.php" enctype="multipart/form-data">
 						<div class="form-group col-md-6 p-l">
 							<label>Company Name</label>
-							<input type="text" class="form-control" />
+							<input type="text" name="c_name" class="form-control" required="required" data-validation-required-message="Please Enter You Comapny Name" />
 						</div>
 						<div class="form-group col-md-6 p-r">
 							<label>Address</label>
-							<input type="text" class="form-control" />
+							<input type="text" name="c_address" class="form-control" required="required" data-validation-required-message="Please Enter Company Address "/>
 						</div>
 						<div class="form-group col-md-6 p-l">
 							<label>Email</label>
-							<input type="text" class="form-control" />
+							<input type="text" name="c_email" class="form-control" required="required"  data-validation-required-message="Please Enter The Email Address"/>
 						</div>
 						<div class="form-group col-md-6 p-r">
 							<label>Phone Number</label>
-							<input type="text" class="form-control" />
+							<input type="text" name="c_phone" class="form-control" required="required" data-validation-required-message="Please Enter The Phone Number" />
 						</div>
 						<div class="form-group col-md-6 p-l">
 							<label>Website (Optional)</label>
-							<input type="text" class="form-control" placeholder="eg. www.example.com" />
+							<input type="text" name="c_web" class="form-control" placeholder="eg. www.example.com" />
 						</div>
 						<div class="form-group col-md-6 p-r">
 							<label>Company Logo <span>(max. file size 3MB)</span></label>
-							<input type="file" name="img[]" class="file form-control">
-							<input type="text" class="form-control">
-							<span class="input-group-btn text-right">
-								<button class="browse btn btn-default input-lg" type="button"> Choose </button>
-							</span>
+							<input type="file" name="photo" class="form-control">
 						</div>
 						<div class="form-group social_icon col-md-6 p-l">
 							<label>Facebook <span>(Optional)</span></label>
-							<input type="text" class="form-control" placeholder="Enter page URL" />
+							<input type="text" name="c_fb" class="form-control" placeholder="Enter page URL" />
 							<a href="#"><i class="fa fa-facebook"></i></a>
 						</div>
 						<div class="form-group social_icon twiiter col-md-6 p-r">
 							<label>Twitter <span>(Optional)</span></label>
-							<input type="text" class="form-control" placeholder="@companyname" />
+							<input type="text" name="c_twitter" class="form-control" placeholder="@companyname" />
 							<a href="#"><i class="fa fa-twitter"></i></a>
 						</div>
 						<div class="form-group social_icon linkedin col-md-6 p-l">
 							<label>Linked in <span>(Optional)</span></label>
-							<input type="text" class="form-control" placeholder="Enter page URL" />
+							<input type="text" name="c_linkedin" class="form-control" placeholder="Enter page URL" />
 							<a href="#"><i class="fa fa-linkedin"></i></a>
 						</div>
 						<div class="form-group social_icon google_plus col-md-6 p-r">
 							<label>Google + <span>(Optional)</span></label>
-							<input type="text" class="form-control" placeholder="Enter page URL" />
+							<input type="text" name="c_gplus" class="form-control" placeholder="Enter page URL" />
 							<a href="#"><i class="fa fa-google"></i></a>
 						</div>
 						<div class="form-group col-md-12 p-l p-r">
 							<label>Job Description</label>
-							<div id="wysihtml5-editor-toolbar">
-								<header>
-									<ul class="commands">
-										<li data-wysihtml5-command="bold" title="Make text bold (CTRL + B)" class="command"></li>
-										<li data-wysihtml5-command="italic" title="Make text italic (CTRL + I)" class="command"></li>
-										<li data-wysihtml5-command="insertUnorderedList" title="Insert an unordered list" class="command"></li>
-										<li data-wysihtml5-command="insertOrderedList" title="Insert an ordered list" class="command"></li>
-										<li data-wysihtml5-command="createLink" title="Insert a link" class="command"></li>
-										<li data-wysihtml5-command="insertImage" title="Insert an image" class="command"></li>
-										<li data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" title="Insert headline 1" class="command"></li>
-										<li data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" title="Insert headline 2" class="command"></li>
-										<li data-wysihtml5-command-group="foreColor" class="fore-color command" title="Color the selected text" >
-											<ul>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="silver"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="gray"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="maroon"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="red"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="purple"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="green"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="olive"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="navy"></li>
-												<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="blue"></li>
-											</ul>
-										</li>
-										<li data-wysihtml5-command="insertSpeech" title="Insert speech" class="command"></li>
-										<li data-wysihtml5-action="change_view" title="Show HTML" class="action"></li>
-									</ul>
-								</header>
-								<div data-wysihtml5-dialog="createLink" style="display: none;">
-									<label>
-										Link:
-										<input data-wysihtml5-dialog-field="href" value="http://">
-									</label>
-									<a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
-								</div>
-								<div data-wysihtml5-dialog="insertImage" style="display: none;">
-									<label>
-										Image:
-										<input data-wysihtml5-dialog-field="src" value="http://">
-									</label>
-									<a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
-								</div>
-							</div>
-							<textarea id="wysihtml5-editor" spellcheck="false" autofocus placeholder="Enter something ...">
-								<h1>A better approach to rich text editing</h1>
-								<p>wysihtml5 is an <span class="wysiwyg-color-green"><a href="#">open source</a></span> rich text editor based on HTML5 technology and the progressive-enhancement approach.
-								It uses a sophisticated security concept and aims to generate fully valid HTML5 markup by preventing unmaintainable tag soups and inline styles.</p>
-								<h2>Features</h2>
-								<ul>
-									<li>It's fast and lightweight (smaller than TinyMCE, Aloha, ...)</li>
-									<li>Auto-linking of urls as-you-type</li>
-									<li>Generates valid and semantic HTML5 markup (even when the content is pasted from MS Word)</li>
-									<li>Uses class names instead of inline styles</li>
-									<li>Unifies line break handling across browsers</li>
-									<li>Uses sandboxed iframes in order to prevent identity theft through XSS</li>
-									<li>Speech-input for Chrome</li>
-									<li>No jQuery required</li>
-								</ul>
-								<h2>Browser Support</h2>
-								<ul>
-
-									<li><strong>Graceful degradation:</strong> Unsupported browsers will get a <i>&amp;lt;textarea&amp;gt;</i></li>
-								</ul>
-							</textarea>
+							<textarea name="c_description" class="form-control" required="required" data-validation-required-message="Please Enter The Description" placeholder="Page Body"></textarea>
+						</div>
+						<div class="form-group col-md-12 p-l p-r">
+							<label>Business Details</label>
+							<textarea name="c_business" class="form-control" required="required" data-validation-required-message="Please Enter The Description" placeholder="Page Body"></textarea>
+						</div>
+						<div class="form-group col-md-12 p-l p-r">
+							<label>What We Do <span>*in bullets form</span></label>
+							<textarea name="c_wwd" class="form-control" required="required" data-validation-required-message="Please Enter The Description" placeholder="Page Body"></textarea>
 						</div>
 						<div class="col-md-12 p-l">
-							<a href="#" class="btn btn-default">Preview Your Profile</a>
+							<!-- <a class="btn btn-default">Preview Your Profile</a> -->
+							<button type="submit" name="submit" class="btn btn-default">Preview Your Profile</button>
 						</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
 </main>
-
-<!-- <script type="text/javascript" src="js/wysihtml.js"></script>
-<script type="text/javascript" src="js/wysihtml5-0.3.0.js"></script>
-<script type="text/javascript" src="js/file.js"></script> -->
+<script src="http://cdn.ckeditor.com/4.6.1/standard/ckeditor.js"></script>
+<script>
+	CKEDITOR.replace( 'c_description' );
+	CKEDITOR.replace( 'c_business' );
+	CKEDITOR.replace( 'c_wwd' );
+</script>
 <?php include(SHARED_PATH . '/public_footer.php'); ?>

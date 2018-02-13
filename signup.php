@@ -15,7 +15,7 @@ if (is_post_request()) {
 		$candidate['u_status'] = 2;
 		$candidate['u_active'] = 1;
 
-		$result = insert_candidate($candidate);
+		$result = candidate_sign_up($candidate);
 		if ($result === true) {
 			$new_id = mysqli_insert_id($db);
 			
@@ -40,7 +40,7 @@ if (is_post_request()) {
 		$company['u_status'] = 3;
 		$company['u_active'] = 1;
 
-		$result = insert_company($company);
+		$result = company_sign_up($company);
 		if ($result === true) {
 			$new_id = mysqli_insert_id($db);
 

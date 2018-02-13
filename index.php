@@ -430,7 +430,7 @@ include(SHARED_PATH . '/public_header.php');
 			<div class="row">
 				<div class="col-md-12 text-center">
 					<div class="vector_map">
-						<img src="assets/images/home/map.png" alt="" class="img-responsive">
+						<img src="images/home/map.png" alt="" class="img-responsive">
 					</div>
 				</div> 
 			</div>

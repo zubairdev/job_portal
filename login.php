@@ -1,5 +1,10 @@
 <?php require_once('private/initialize.php');
 
+if (isset($_SESSION['u_id'])) {
+	redirect_to(url_for('index.php'));
+}
+
+
 $errors = [];
 $email = '';
 $password = '';
