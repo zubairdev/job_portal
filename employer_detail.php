@@ -10,7 +10,7 @@ if (isset($_GET['company'])) {
     $session_id = $_SESSION['u_id'];
 
 
-    $sql = "SELECT * FROM company WHERE user_id=$session_id";
+    $sql = "SELECT * FROM company WHERE c_id = $id";
     $result = mysqli_query($db, $sql);
     $row = mysqli_fetch_assoc($result);
     $c_u_id = $row['user_id'];

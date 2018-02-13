@@ -94,7 +94,10 @@ include(SHARED_PATH . '/public_header.php');
 						</div>
 						<div class="form-group col-md-6 p-l">
 							<label>Email</label>
+							<div class="input-group">
+							<div class="input-group-addon">https://</div>
 							<input type="text" name="c_email" class="form-control" required="required"  data-validation-required-message="Please Enter The Email Address"/>
+						</div>
 						</div>
 						<div class="form-group col-md-6 p-r">
 							<label>Phone Number</label>

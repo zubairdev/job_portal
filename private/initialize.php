@@ -9,7 +9,7 @@
 	define("SHARED_PATH", PRIVATE_PATH . '/shared' );
 
 
-	$public_end = strpos($_SERVER['SCRIPT_NAME'], '/job_portall') + 12;
+	$public_end = strpos($_SERVER['SCRIPT_NAME'], '/mywork') + 7;
   	$doc_root = substr($_SERVER['SCRIPT_NAME'], 0, $public_end);
   	define("WWW_ROOT", $doc_root);
 
