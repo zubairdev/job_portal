@@ -14,6 +14,7 @@ if (isset($_GET['id'])) {
     if ($result) {
         $row = mysqli_fetch_assoc($result);
         $resume_u_id = $row['u_id'];
+        $r_id = $row['r_id'];
     }
 
     // Now take out exact match result
@@ -44,7 +45,7 @@ include(SHARED_PATH . '/public_header.php');
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12 text-center">
-                                <div class="banner-heading">Resume Paage</div>    
+                                <div class="banner-heading">Resume Page</div>    
                             </div>  
                         </div>
                     </div>
@@ -54,7 +55,8 @@ include(SHARED_PATH . '/public_header.php');
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-3 author">
-                                    <div class="panel-body">
+                                    <div class="row">
+                                        <div class="panel-body">
                                         <a href="#"><img src="<?php echo 'images/candidates/' . $resume['r_photo']; ?>" alt="" class="img-responsive" /></a>
                                         <div class="job_title">
                                             <p>Hi, <?php echo $resume['r_fname']; ?></p>
@@ -66,6 +68,21 @@ include(SHARED_PATH . '/public_header.php');
                                             <span><i class="fa fa-phone"></i>+92- <?php echo $resume['r_phn']; ?></span>
                                             <span><i class="fa fa-map-marker"></i><?php echo $resume['r_addr']; ?></span>
                                         </div>
+                                    </div>
+                                    </div>
+                                    <div class="row">
+                                        <section class="manage">
+                                            <div class="Resume">
+                                                <h1>My Account</h1>
+                                                <ul class="unstyled">
+                                                    <li><a href="resume.php?id=<?php echo $r_id; ?>"><i class="fa fa-caret-right"></i> My Profile</a></li>
+                                                    <li><a href="#"><i class="fa fa-caret-right"></i> Edit Profile</a></li>
+                                                    <li><a href="#"><i class="fa fa-caret-right"></i> View All applied Jobs</a></li>
+                                                    <li><a href="#"><i class="fa fa-caret-right"></i> Change Password</a></li>
+                                                    <li class="border-none"><a href="#"><i class="fa fa-caret-right"></i> Sign Out</a></li>
+                                                </ul>
+                                            </div>
+                                        </section>
                                     </div>
                                 </div>
                                 <div class="col-md-9">

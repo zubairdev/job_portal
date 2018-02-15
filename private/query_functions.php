@@ -62,6 +62,18 @@ function find_resume_by_id($id) {
     return $resume; // returns an assoc. array
 }
 
+function find_resume_by_u_id($id) {
+    global $db;
+
+    $sql = "SELECT * FROM resume ";
+    $sql .= "WHERE u_id ='" . db_escape($db, $id) . "' ";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    $resume = mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+    return $resume; // returns an assoc. array
+}
+
 function candidate_sign_up($candidate) {
 	global $db;
 
@@ -170,6 +182,43 @@ function find_company_by_id($id) {
     mysqli_free_result($result);
     return $company; // returns an assoc. array
 
+}
+
+function find_company_by_user_id($id) {
+    global $db;
+
+    $sql = "SELECT * FROM company ";
+    $sql .= "WHERE user_id='" . db_escape($db, $id) . "'";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    $company = mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+    return $company; // returns an assoc. array
+
+}
+
+function company_validation($session_id) {
+    global $db;
+
+    $sql = "SELECT * FROM company WHERE user_id = $session_id";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    $company = mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+
+    return $company;
+}
+
+function find_all_user() {
+    global $db;
+
+    $sql = "SELECT * FROM user";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    $user = mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+
+    return $user;
 }
 
 

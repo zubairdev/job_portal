@@ -41,7 +41,7 @@
                                 <ul class="nav navbar-nav scrollto">  
                                     <li><a href="index.php">Home</a></li>
                                     <li class="dropdown">
-                                        <a href="browse_jobs.php" class="dropdown-toggle" data-toggle="dropdown">Browse Jobs <!-- <i class="fa fa-angle-down"></i> --></a>
+                                        <a href="browse_jobs.php" class="dropdown-toggle" data-toggle="dropdown">Browse Jobs<!--  <i class="fa fa-angle-down"></i> --></a>
                                         <!-- <ul class="dropdown-menu">
                                             <li><a href="manage_application.html">Manage Applications</a></li>  
                                             <li><a href="manage_job.html">Manage jobs</a></li> 
@@ -50,40 +50,54 @@
                                         </ul> -->
                                     </li>
                                     <li class="dropdown">
-                                        <a href="employer_list.php" class="dropdown-toggle" data-toggle="dropdown">Employers <!-- <i class="fa fa-angle-down"></i> --></a>
-                                        <!-- <ul class="dropdown-menu">
-                                            <li><a href="employe_detail.html">Employers Detail</a></li>  
-                                            <li><a href="employe_list.html">Employers List</a></li>  
-                                            <li><a href="post.html">Post A job</a></li>
-                                        </ul> -->
+                                        <a href="employer_list.php" class="dropdown-toggle" data-toggle="dropdown">Employers</a>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="candidates.php" class="dropdown-toggle" data-toggle="dropdown">Candidates <!-- <i class="fa fa-angle-down"></i> --></a>
-                                        <!-- <ul class="dropdown-menu">
-                                            <li><a href="candidates.html">Browse Candidates</a></li>
-                                            <li><a href="resume.html">Submit Resume</a></li>
-                                        </ul> -->
+                                        <a href="candidates.php" class="dropdown-toggle" data-toggle="dropdown">Candidates</a>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages <!-- <i class="fa fa-angle-down"></i> --></a>
-                                        <!-- <ul class="dropdown-menu">
-                                            <li><a href="about.html">About</a></li>  
-                                            <li><a href="resume2.html">Resume Page</a></li>
-                                            <li><a href="faq.html">Faq</a></li>  
-                                            <li><a href="price_table.html">Pricing Tables</a></li>  
-                                            <li><a href="contact.html">Contact Us</a></li>
-                                        </ul> -->
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages</a>
                                     </li>
                                 </ul>
                             </div>
                         </nav>  
                     </div>
-                    <?php if (isset($_SESSION['u_username'])) { ?>
+                    <?php
+                        if (isset($_SESSION['u_id'])) {
+                            $id = $_SESSION['u_id'];
+                        
+                        $resume = find_resume_by_u_id($id);
+                        $company = find_company_by_user_id($id);
+                    ?>
+                    <?php if ($resume['u_id'] == $id) { ?>
                             <div class="col-md-3 text-right">
-                            <a href="login.php" class="login active"><?php echo $_SESSION['u_username']; ?></a>
-                            <a href="userout.php" class="signup">Logout</a>
+                                <!-- <a href="login.php" class="login active"><?php // echo $_SESSION['u_username']; ?></a>
+                                <a href="userout.php" class="signup">Logout</a> -->
+
+                                <ul class="nav navbar-nav scrollto" style="float: right; margin: 0 5px 5px 0;">
+                                    <li class="dropdown">
+                                        <a href="browse_jobs.php" class="dropdown-toggle user" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i> <?php echo $_SESSION['u_username']; ?> <i class="fa fa-angle-down"></i></a>
+                                        <ul class="dropdown-menu user-dropdown">
+                                            <li><a href="resume.php?id=<?php echo $resume['r_id']; ?>">View Profile</a></li>
+                                            <li><a href="userout.php">Log Out</a></li>   
+                                        </ul>
+                                    </li>
+                                </ul>
                             </div>
-                        <?php } else { ?> 
+                        <?php } elseif ($company['user_id'] == $id) { ?>
+                            <div class="col-md-3 text-right">
+                                <ul class="nav navbar-nav scrollto" style="float: right; margin: 0 5px 5px 0;">
+                                    <li class="dropdown">
+                                        <a href="browse_jobs.php" class="dropdown-toggle user" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i> <?php echo $_SESSION['u_username']; ?> <i class="fa fa-angle-down"></i></a>
+                                        <ul class="dropdown-menu user-dropdown">
+                                            <li><a href="employer_detail.php?company=<?php echo $company['c_id']; ?>">View Profile</a></li>
+                                            <li><a href="userout.php">Log Out</a></li>   
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        <?php } ?> 
+                    <?php } else { ?> 
                             <div class="col-md-3 text-right">
                                 <a href="login.php" class="login active">Login</a>
                                 <a href="signup.php" class="signup">Sign Up</a>

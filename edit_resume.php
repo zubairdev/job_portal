@@ -1,119 +1,13 @@
-<?php require_once('private/initialize.php');
-
-require_login();
+<?php require_once('private/initialize.php'); ?>
+<?php
 
 include(SHARED_PATH . '/public_header.php');
-	
-	// usre.r_id and resume.u_id will be same
-    $session_id = $_SESSION['u_id'];
-
-    // candidate can create resume once
-    $sql = "SELECT * FROM resume WHERE u_id = $session_id";
-	$run = mysqli_query($db, $sql);
-	$row = mysqli_fetch_array($run);
-	$user_id = $row['r_id'];
-	$check = $row['r_check'];
-
-	echo "value: " . $check . "<br>";
-	echo "Id of : " . $user_id;
-	
-	if($check == 'insert'){
-		header("location: resume.php?id=$user_id ");
-	} elseif ($check == 'empty') {
-		header("location: post_job.php");
-	}
-	
-if(is_post_request()) {
-
-		$resume = [];
-		
-		$resume['u_id'] = $session_id ?? '';
-		$resume['r_fname'] = $_POST['Fname'] ?? '';
-		$resume['r_lname'] = $_POST['Lname'] ?? '';
-		$resume['r_title'] = $_POST['title'] ?? '';
-		$resume['r_email'] = $_POST['mail'] ?? '';
-		$resume['r_phn'] = $_POST['phone'] ?? '';
-		$resume['r_dob'] = $_POST['date'] ?? '';
-		$resume['r_addr'] = $_POST['address'] ?? '';
-		$resume['r_job_title'] = $_POST['jobtitle'] ?? '';
-		$resume['r_job_type'] = $_POST['jobtype'] ?? '';
-		$resume['r_postion'] = $_POST['position'] ?? '';
-		$resume['r_yearExp'] = $_POST['exp'] ?? '';
-		$resume['r_jobcat'] = $_POST['exp-jobcat'] ?? '';
-		$resume['r_exptsalry'] = $_POST['salary'] ?? '';
-		$resume['r_skills'] = $_POST['skills'] ?? '';
-		$resume['r_despt'] = $_POST['editor1'] ?? '';
-		$resume['r_edu1'] = $_POST['graduation'] ?? '';
-		$resume['r_splztn'] = $_POST['splz'] ?? '';
-		$resume['r_inst1'] = $_POST['Institute'] ?? '';
-		$resume['r_year1'] = $_POST['year'] ?? '';
-		$resume['r_grade'] = $_POST['grade'] ?? '';
-		$resume['r_mark1'] = $_POST['marks'] ?? '';
-		$resume['r_inst2'] = $_POST['oppinst'] ?? '';
-		$resume['r_edu2'] = $_POST['oppedu'] ?? '';
-		$resume['r_mark2'] = $_POST['oppmarks'] ?? '';
-		$resume['r_year2'] = $_POST['oppyear1'] ?? '';
-		$resume['r_inst3'] = $_POST['moreinst'] ?? '';
-		$resume['r_edu3'] = $_POST['morecert'] ?? '';
-		$resume['r_mark3'] = $_POST['moremarks'] ?? '';
-		$resume['r_year3'] = $_POST['moreyear'] ?? ''; 
-  		// Photo
-
-		$photo = $_FILES['photo']['name'];
-		$tmp_name= $_FILES['photo']['tmp_name'];
-		$local_image = "images/candidates/";
-		$upload=move_uploaded_file($tmp_name, $local_image . $photo);
-
-		$resume['photo'] = $photo;
 
 
-		$result = insert_resume($resume);
-		if($result === true) {
-			$new_id = mysqli_insert_id($db);
-			$_SESSION['message'] = 'The resume was created successfully';
-			redirect_to(url_for('resume.php?id=' . $new_id));
-		} else {
-			echo "Error: ";
-		}
-
-} else {
-
-	$resume = [];
-	$resume['r_fname'] = '';
-	$resume['r_lname'] = '';
-	$resume['r_title'] = '';
-	$resume['r_email'] = '';
-	$resume['r_phn'] = '';
-	$resume['r_dob'] = '';
-	$resume['r_addr'] = '';
-	$resume['r_job_title'] = '';
-	$resume['r_job_type'] = '';
-	$resume['r_postion'] = '';
-	$resume['r_yearExp'] = '';
-	$resume['r_jobcat'] = '';
-	$resume['r_exptsalry'] = '';
-	$resume['r_skills'] = '';
-	$resume['r_despt'] = '';
-	$resume['r_edu1'] = '';
-	$resume['r_splztn'] = '';
-	$resume['r_inst1'] = '';
-	$resume['r_year1'] = '';
-	$resume['r_grade'] = '';
-	$resume['r_mark1'] = '';
-	$resume['r_inst2'] = '';
-	$resume['r_edu2'] = '';
-	$resume['r_mark2'] = '';
-	$resume['r_year2'] = '';
-	$resume['r_inst3'] = '';
-	$resume['r_edu3'] = '';
-	$resume['r_mark3'] = '';
-	$resume['r_year3'] = '';
-	$resume['r_photo'] = '';
-
-
-}
 
 ?>
+
+
 
 <div class="page_banner banner resume-banner">
 	<div class="container">

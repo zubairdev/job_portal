@@ -2,6 +2,25 @@
 
 require_login();
 $session_id = $_SESSION['u_id'];
+
+	// restrict company to open add company page again
+$company = company_validation($session_id);
+$c_id = $company['c_id'];
+$user_id = $company['user_id'];
+$c_check = $company['c_check'];
+
+if ($c_check == 'insert') {
+	redirect_to(url_for('employer_detail.php?company=' . $c_id));
+} else {
+	// do nothing
+}
+	// Only company user can access this page not candidate
+	$user = find_all_user();
+	$user_status = $user['u_status'];
+	if ($user_status != 3) {
+		redirect_to(url_for('browse_jobs.php'));
+	}
+
 if (is_post_request()) {
 
 	$company = [];
@@ -23,7 +42,6 @@ if (is_post_request()) {
 	$tmp_name= $_FILES['photo']['tmp_name'];
 	$local_image = "images/company/logo/";
 	$upload=move_uploaded_file($tmp_name, $local_image . $photo);
-
 	$company['photo'] = $photo;
 
 	$result = insert_company($company);
@@ -34,6 +52,7 @@ if (is_post_request()) {
 	} else {
 		echo "Error: ....... ";
 	}
+
 } else {
 
 	$company = [];

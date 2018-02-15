@@ -193,6 +193,25 @@ input[type=checkbox], input[type=radio]{     margin-top: 6px;
     box-shadow: none;
     outline: none;
 }
+
+/********* user sign in button *********/
+.navbar-nav>li>a.user {
+    border: 1px solid #eee;
+    padding: 15px 20px;
+    font-size: 16px;
+}
+.navbar-nav>li>a.user:hover {
+    background-color: #fff;
+    border: 1px solid #026874;
+    color: #026874;
+}
+.navbar-nav>li .user-dropdown {
+    left: 0px;
+}
+.navbar-nav>li .user-dropdown li a {
+    padding: 10px 25px;
+}
+
 /*********site-banenr*********/
 .site-banner{
     background: url(../images/home/site-banner.jpg) center no-repeat;
