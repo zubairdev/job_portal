@@ -1,11 +1,11 @@
 <?php require_once('private/initialize.php');
 
-require_login();
+// require_login();
 
 if (isset($_GET['id'])) {
 
-    $id = $_GET['id']; // user signup id
-    // $for_redirect = $id;
+    $id = $_GET['id']; // it comes from resume r_id
+
     $session_id = $_SESSION['u_id'];
 
     $sql = "SELECT * FROM resume ";
@@ -21,15 +21,13 @@ if (isset($_GET['id'])) {
 
     if ($session_id == $resume_u_id) {
         $resume = find_resume_by_id($id);
-    } else {
+    } /*else {
         redirect_to(url_for('candidates.php'));
-    } // if result not match
+    }*/ // if result not match
 
-    /*echo 'URL ID: ' . $id . '<br>'; // from resume table
+    echo 'URL ID: ' . $id . '<br>'; // from resume table
     echo 'Session ID: ' . $session_id . '<br>'; // from user table (Session)
     echo 'Resume U_ID: ' . $resume_u_id . '<br>'; // from resume table
-    echo $resume_fname . '<br>';
-    echo $resume_lname . '<br>';*/
 
 } else {
 
@@ -76,7 +74,7 @@ include(SHARED_PATH . '/public_header.php');
                                                 <h1>My Account</h1>
                                                 <ul class="unstyled">
                                                     <li><a href="resume.php?id=<?php echo $r_id; ?>"><i class="fa fa-caret-right"></i> My Profile</a></li>
-                                                    <li><a href="#"><i class="fa fa-caret-right"></i> Edit Profile</a></li>
+                                                    <li><a href="edit_resume.php?id=<?php echo $r_id; ?>"><i class="fa fa-caret-right"></i> Edit Profile</a></li>
                                                     <li><a href="#"><i class="fa fa-caret-right"></i> View All applied Jobs</a></li>
                                                     <li><a href="#"><i class="fa fa-caret-right"></i> Change Password</a></li>
                                                     <li class="border-none"><a href="#"><i class="fa fa-caret-right"></i> Sign Out</a></li>

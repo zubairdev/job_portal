@@ -74,6 +74,53 @@ function find_resume_by_u_id($id) {
     return $resume; // returns an assoc. array
 }
 
+function update_resume_by_id($resume) {
+    global $db;
+
+    $sql = "UPDATE resume SET ";
+    $sql .= "r_fname='" . db_escape($db, $resume['r_fname']) . "', ";
+    $sql .= "r_lname='" . db_escape($db, $resume['r_lname']) . "', ";
+    $sql .= "r_title='" . db_escape($db, $resume['r_title']) . "', ";
+    $sql .= "r_email='" . db_escape($db, $resume['r_email']) . "', ";
+    $sql .= "r_phn='" . db_escape($db, $resume['r_phn']) . "', ";
+    $sql .= "r_dob='" . db_escape($db, $resume['r_dob']) . "', ";
+    $sql .= "r_addr='" . db_escape($db, $resume['r_addr']) . "', ";
+    $sql .= "r_job_title='" . db_escape($db, $resume['r_job_title']) . "', ";
+    $sql .= "r_job_type='" . db_escape($db, $resume['r_job_type']) . "', ";
+    $sql .= "r_postion='" . db_escape($db, $resume['r_postion']) . "', ";
+    $sql .= "r_yearExp='" . db_escape($db, $resume['r_yearExp']) . "', ";
+    $sql .= "r_jobcat='" . db_escape($db, $resume['r_jobcat']) . "', ";
+    $sql .= "r_exptsalry='" . db_escape($db, $resume['r_exptsalry']) . "', ";
+    $sql .= "r_skills='" . db_escape($db, $resume['r_skills']) . "', ";
+    $sql .= "r_despt='" . db_escape($db, $resume['r_despt']) . "', ";
+    $sql .= "r_edu1='" . db_escape($db, $resume['r_edu1']) . "', ";
+    $sql .= "r_splztn='" . db_escape($db, $resume['r_splztn']) . "', ";
+    $sql .= "r_inst1='" . db_escape($db, $resume['r_inst1']) . "', ";
+    $sql .= "r_year1='" . db_escape($db, $resume['r_year1']) . "', ";
+    $sql .= "r_grade='" . db_escape($db, $resume['r_grade']) . "', ";
+    $sql .= "r_mark1='" . db_escape($db, $resume['r_mark1']) . "', ";
+    $sql .= "r_inst2='" . db_escape($db, $resume['r_inst2']) . "', ";
+    $sql .= "r_edu2='" . db_escape($db, $resume['r_edu2']) . "', ";
+    $sql .= "r_mark2='" . db_escape($db, $resume['r_mark2']) . "', ";
+    $sql .= "r_year2='" . db_escape($db, $resume['r_year2']) . "', ";
+    $sql .= "r_inst3='" . db_escape($db, $resume['r_inst3']) . "', ";
+    $sql .= "r_edu3='" . db_escape($db, $resume['r_edu3']) . "', ";
+    $sql .= "r_mark3='" . db_escape($db, $resume['r_mark3']) . "', ";
+    $sql .= "r_year3='" . db_escape($db, $resume['r_year3']) . "' ";
+    $sql .= "WHERE r_id='" . db_escape($db, $resume['id']) . "' ";
+
+    $result = mysqli_query($db, $sql);
+    // For UPDATE statements, $result is true/false
+    if($result) {
+      return true;
+    } else {
+      // UPDATE failed
+      echo mysqli_error($db);
+      db_disconnect($db);
+      exit;
+    }
+}
+
 function candidate_sign_up($candidate) {
 	global $db;
 
