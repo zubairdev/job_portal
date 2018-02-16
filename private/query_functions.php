@@ -78,6 +78,8 @@ function update_resume_by_id($resume) {
     global $db;
 
     $sql = "UPDATE resume SET ";
+    $sql .= "r_photo='" . db_escape($db, $resume['photo']) . "', ";
+    // $sql .= "r_photo='" . db_escape($db, $photo) . "', ";
     $sql .= "r_fname='" . db_escape($db, $resume['r_fname']) . "', ";
     $sql .= "r_lname='" . db_escape($db, $resume['r_lname']) . "', ";
     $sql .= "r_title='" . db_escape($db, $resume['r_title']) . "', ";

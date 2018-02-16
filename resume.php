@@ -21,9 +21,9 @@ if (isset($_GET['id'])) {
 
     if ($session_id == $resume_u_id) {
         $resume = find_resume_by_id($id);
-    } /*else {
+    } else {
         redirect_to(url_for('candidates.php'));
-    }*/ // if result not match
+    } // if result not match
 
     echo 'URL ID: ' . $id . '<br>'; // from resume table
     echo 'Session ID: ' . $session_id . '<br>'; // from user table (Session)

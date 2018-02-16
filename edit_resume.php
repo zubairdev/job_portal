@@ -1,14 +1,15 @@
 <?php
 require_once('private/initialize.php');
 
-// require_login();
+require_login();
 
-/*if (!isset($_GET['id'])) {
+if (!isset($_GET['id'])) {
 	redirect_to(url_for('index.php'));
-}*/
+}
 if(isset($_GET['id'])){
 $id = $_GET['id'];
-$resume1 = find_resume_by_id($id);
+$resume = find_resume_by_id($id);
+$old_photo = $resume['r_photo'];
 }
 
 if (is_post_request()) {
@@ -45,10 +46,21 @@ if (is_post_request()) {
 	$resume['r_mark3'] = $_POST['moremarks'] ?? '';
 	$resume['r_year3'] = $_POST['moreyear'] ?? '';
 
-	$result2 = update_resume_by_id($resume);
-	if($result2 == true) {
+	$photo = $_FILES['photo']['name'];
+	$tmp_name= $_FILES['photo']['tmp_name'];
+	$local_image = "images/candidates/";
+	$upload=move_uploaded_file($tmp_name, $local_image . $photo);
+
+	$resume['photo'] = $photo;
+
+	if (empty($resume['photo'])) {
+		$resume['photo'] = $old_photo;
+	}
+
+	$result = update_resume_by_id($resume);
+	if($result == true) {
     	$_SESSION['message'] = 'The resume was updated successfully.';
-    	redirect_to(url_for('resume.php?id=' . $resume['id']));
+    	redirect_to(url_for('resume.php?id=' . $id));
   	} else {
     	echo 'Errorrr .....';
     	//var_dump($errors);
@@ -86,7 +98,7 @@ if (is_post_request()) {
 					<div class="panel-body">
 						<div class="panel-heading">Contact Information</div>
 						<hr>
-						<form method="POST" enctype="multipart/form-data" action="edit_resume.php">
+						<form method="POST" enctype="multipart/form-data" action="">
 							<div class="form-group col-md-6 p-l">
 								<label>Photo <span>(optional)</span></label>
 								<input type="file" name="photo" class="form-control">
@@ -97,89 +109,89 @@ if (is_post_request()) {
 							</div>
 							<div class="form-group col-md-6 p-l">
 								<label>First Name</label>
-								<input type="text" name="Fname" class="form-control" placeholder="eg. Kevin" value="<?php echo $resume1['r_fname']; ?>" required />
+								<input type="text" name="Fname" class="form-control" placeholder="eg. Kevin" value="<?php echo $resume['r_fname']; ?>" required />
 							</div>
 							<div class="form-group col-md-6 p-r">
 								<label>Last name</label>
-								<input type="text" name="Lname" class="form-control" placeholder="eg. Skoglund" value="<?php echo $resume1['r_lname']; ?>" required />
+								<input type="text" name="Lname" class="form-control" placeholder="eg. Skoglund" value="<?php echo $resume['r_lname']; ?>" required />
 							</div>
 							<div class="form-group col-md-6 p-l">
 								<label>Email</label>
-								<input type="email" name="mail" class="form-control" placeholder="eg. kevin@domain.com" value="<?php echo $resume1['r_email']; ?>" required />
+								<input type="email" name="mail" class="form-control" placeholder="eg. kevin@domain.com" value="<?php echo $resume['r_email']; ?>" required />
 							</div>
 							<div class="form-group col-md-6 p-r">
 								<label>Phone Number</label>
-								<input type="text" name="phone" class="form-control" placeholder="eg. 321-1121122" value="<?php echo $resume1['r_phn']; ?>" required />
+								<input type="text" name="phone" class="form-control" placeholder="eg. 321-1121122" value="<?php echo $resume['r_phn']; ?>" required />
 							</div>
 							<div class="form-group col-md-6 p-l">
 								<label>Date Of Birth</label>
-								<input type="date"  name="date" class="form-control" value="<?php echo $resume1['r_dob']; ?>" required />
+								<input type="date"  name="date" class="form-control" value="<?php echo $resume['r_dob']; ?>" required />
 							</div>
 							<div class="form-group col-md-6   p-r">
 								<label>Address</label>
-								<input type="text" name="address" class="form-control" value="<?php echo $resume1['r_addr']; ?>" required />
+								<input type="text" name="address" class="form-control" value="<?php echo $resume['r_addr']; ?>" required />
 							</div>
 							<div class="borderfull-width"></div>
 							<div class="panel-heading">Basic Information</div>
 							<hr>
 							<div class="form-group col-md-6 p-l">
 								<label>Job Title</label>
-								<input type="text" name="jobtitle" class="form-control" value="<?php echo $resume1['r_job_title']; ?>" />
+								<input type="text" name="jobtitle" class="form-control" value="<?php echo $resume['r_job_title']; ?>" />
 							</div>
 							<div class="form-group col-md-6 p-r">
 								<label>Job Type</label>
-								<input type="text" name="jobtype" class="form-control" value="<?php echo $resume1['r_job_type']; ?>" />
+								<input type="text" name="jobtype" class="form-control" value="<?php echo $resume['r_job_type']; ?>" />
 							</div>
 							<div class="form-group col-md-6 p-l">
 								<label>Years of Experience</label>
-								<input type="text" name="exp" class="form-control" value="<?php echo $resume1['r_yearExp']; ?>" />
+								<input type="text" name="exp" class="form-control" value="<?php echo $resume['r_yearExp']; ?>" />
 							</div>
 							<div class="form-group col-md-6 p-r">
 								<label>Position</label>
-								<input type="text" name="position" class="form-control" value="<?php echo $resume1['r_postion']; ?>" />
+								<input type="text" name="position" class="form-control" value="<?php echo $resume['r_postion']; ?>" />
 							</div>
 							<div class="form-group col-md-6 p-l">
 								<label>Expected Job Category</label>
-								<input type="text" name="exp-jobcat" class="form-control" value="<?php echo $resume1['r_jobcat']; ?>" />
+								<input type="text" name="exp-jobcat" class="form-control" value="<?php echo $resume['r_jobcat']; ?>" />
 							</div>
 							<div class="form-group col-md-6 p-r">
 								<label>Expected Salary Package</label>
-								<input type="text" class="form-control" name="salary" value="<?php echo $resume1['r_exptsalry']; ?>" />
+								<input type="text" class="form-control" name="salary" value="<?php echo $resume['r_exptsalry']; ?>" />
 							</div>
 							<div class="form-group col-md-12p-r">
 								<label>Skills</label>
-								<input type="text" class="form-control" placeholder="Skill, Skill1, Skill2, ..." name="skills" value="<?php echo $resume1['r_skills']; ?>" />
+								<input type="text" class="form-control" placeholder="Skill, Skill1, Skill2, ..." name="skills" value="<?php echo $resume['r_skills']; ?>" />
 							</div>
 							<div class="form-group col-md-12 p-l p-r">
 								<label>Description About Yourself</label>
-								<textarea name="editor1" class="form-control" placeholder="Page Body" value="<?php echo $resume1['r_despt']; ?>"></textarea>
+								<textarea name="editor1" class="form-control" placeholder="Page Body" ><?php echo $resume['r_despt']; ?></textarea>
 							</div>
 							<div class="borderfull-width"></div>
 							<div class="panel-heading">Education Details</div>
 							<hr>
 							<div class="form-group col-md-6 p-l">
 								<label>Basic / Graduation</label>
-								<input type="text" name="graduation" class="form-control" placeholder="eg. Bachelor's of Computer Science" value="<?php echo $resume1['r_edu1']; ?>" required />
+								<input type="text" name="graduation" class="form-control" placeholder="eg. Bachelor's of Computer Science" value="<?php echo $resume['r_edu1']; ?>" required />
 							</div>
 							<div class="form-group col-md-6 p-r">
 								<label>Specialization</label>
-								<input type="text" name="splz" class="form-control" value="<?php echo $resume1['r_splztn']; ?>" />
+								<input type="text" name="splz" class="form-control" value="<?php echo $resume['r_splztn']; ?>" />
 							</div>
 							<div class="form-group col-md-6 p-l">
 								<label>University / Institute</label>
-								<input type="text" class="form-control" name="Institute" placeholder="eg. University of Engineering and Technalogy" value="r_inst1" />
+								<input type="text" class="form-control" name="Institute" placeholder="eg. University of Engineering and Technalogy" value="<?php echo $resume['r_inst1']; ?>" />
 							</div>
 							<div class="form-group col-md-6 p-r">
 								<label>Year</label>
-								<input type="text" name="year" class="form-control" value="<?php echo $resume1['r_year1']; ?>" />
+								<input type="text" name="year" class="form-control" value="<?php echo $resume['r_year1']; ?>" />
 							</div>
 							<div class="form-group col-md-6 p-l">
 								<label>Grade</label>
-								<input type="text" name="grade" class="form-control" placeholder="eg. A / A+ / B" required value="<?php echo $resume1['r_grade']; ?>" />
+								<input type="text" name="grade" class="form-control" placeholder="eg. A / A+ / B" required value="<?php echo $resume['r_grade']; ?>" />
 							</div>
 							<div class="form-group col-md-6 p-r">
 								<label>Marks</label>
-								<input type="text" class="form-control" name="marks" placeholder="eg. 69%" value="<?php echo $resume1['r_mark1']; ?>" />
+								<input type="text" class="form-control" name="marks" placeholder="eg. 69%" value="<?php echo $resume['r_mark1']; ?>" />
 							</div>
 							<div class="row">
 								<div class="col-md-12">
@@ -187,19 +199,19 @@ if (is_post_request()) {
 									<div id="demo" class="collapse">
 										<div class="form-group col-md-6 p-l">
 											<label>Institute Name</label>
-											<input type="text" class="form-control" name="oppinst" value="<?php echo $resume1['r_inst2']; ?>" />
+											<input type="text" class="form-control" name="oppinst" value="<?php echo $resume['r_inst2']; ?>" />
 										</div>
 										<div class="form-group col-md-6 p-l">
 											<label>Board / University</label>
-											<input type="text" class="form-control" name="oppedu" value="<?php echo $resume1['r_edu2']; ?>" />
+											<input type="text" class="form-control" name="oppedu" value="<?php echo $resume['r_edu2']; ?>" />
 										</div>
 										<div class="form-group col-md-6 p-l">
 											<label>Marks</label>
-											<input type="text" class="form-control" name="oppmarks" value="<?php echo $resume1['r_mark2']; ?>" />
+											<input type="text" class="form-control" name="oppmarks" value="<?php echo $resume['r_mark2']; ?>" />
 										</div>
 										<div class="form-group col-md-6 p-l">
 											<label>Year</label>
-											<input type="text" class="form-control" name="oppyear1" value="<?php echo $resume1['r_year2']; ?>" />
+											<input type="text" class="form-control" name="oppyear1" value="<?php echo $resume['r_year2']; ?>" />
 										</div>
 									</div>
 								</div>
@@ -210,19 +222,19 @@ if (is_post_request()) {
 									<div id="demo2" class="collapse">
 										<div class="form-group col-md-6 p-l">
 											<label>Institute Name</label>
-											<input type="text" class="form-control" name="moreinst" value="<?php echo $resume1['r_inst3']; ?>" />
+											<input type="text" class="form-control" name="moreinst" value="<?php echo $resume['r_inst3']; ?>" />
 										</div>
 										<div class="form-group col-md-6 p-l">
 											<label>Certificate</label>
-											<input type="text" class="form-control" name="morecert" value="<?php echo $resume1['r_edu3']; ?>" />
+											<input type="text" class="form-control" name="morecert" value="<?php echo $resume['r_edu3']; ?>" />
 										</div>
 										<div class="form-group col-md-6 p-l">
 											<label>Marks</label>
-											<input type="text" class="form-control" name="moremarks" value="<?php echo $resume1['r_mark3']; ?>" />
+											<input type="text" class="form-control" name="moremarks" value="<?php echo $resume['r_mark3']; ?>" />
 										</div>
 										<div class="form-group col-md-6 p-l">
 											<label>Year</label>
-											<input type="text" class="form-control" name="moreyear" value="<?php echo $resume1['r_year3']; ?>" />
+											<input type="text" class="form-control" name="moreyear" value="<?php echo $resume['r_year3']; ?>" />
 										</div>
 									</div>
 								</div>
