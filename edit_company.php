@@ -1,32 +1,18 @@
 <?php require_once('private/initialize.php');
 
-require_login();
-$_SESSION['u_id'];
-$session_id = $_SESSION['u_id'];
-
-	// restrict company to open add company page again
-$company = company_validation($session_id);
-$c_id = $company['c_id'];
-$user_id = $company['user_id'];
-$c_check = $company['c_check'];
-
-if ($c_check == 'insert') {
-	redirect_to(url_for('employer_detail.php?company=' . $c_id));
-} else {
-	// do nothing
+require_login(); 
+if (!isset($_GET['company'])) {
+	redirect_to(url_for('index.php'));
 }
-	$user = find_user_by_id($session_id);
-	$status = $user['u_status'];
-	if ($status == 3) {
-		// do nothing
-	} else {
-		redirect_to(url_for('browse_jobs.php'));
-	}
-	echo "This is Status : " .$status;
+if(isset($_GET['company'])){
+$company_id = $_GET['company'];
+$company_set = find_company_by_id($company_id);
+$old_photo = $company_set['photo'];
+}
 if (is_post_request()) {
 
 	$company = [];
-	$company['user_id'] = $session_id ?? '';
+	$company['id'] = $company_id ?? '';
 	$company['c_name'] = $_POST['c_name'] ?? '';
 	$company['c_address'] = $_POST['c_address'] ?? '';
 	$company['c_email'] = $_POST['c_email'] ?? '';
@@ -44,17 +30,20 @@ if (is_post_request()) {
 	$tmp_name= $_FILES['photo']['tmp_name'];
 	$local_image = "images/company/logo/";
 	$upload=move_uploaded_file($tmp_name, $local_image . $photo);
+
 	$company['photo'] = $photo;
 
-	$result = insert_company($company);
-	if ($result === true) {
-		$new_id = mysqli_insert_id($db);
-		$_SESSION['message'] = "Your Company has been Added Successfully";
-		redirect_to(url_for('employer_detail.php?company=' . $new_id));
+	if (empty($company['photo'])) {
+		$company['photo'] = $old_photo;
+	}
+
+	$result = update_company_by_id($company);
+	if($result == true) {
+		$_SESSION['message'] = "Your Company has been Edit Successfully";
+		redirect_to(url_for('employer_detail.php?company=' . $company_id));
 	} else {
 		echo "Error: ....... ";
 	}
-
 } else {
 
 	$company = [];
@@ -82,7 +71,7 @@ include(SHARED_PATH . '/public_header.php');
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 text-center">
-				<div class="banner-heading">Create your Profile</div>
+				<div class="banner-heading">Edit your Profile</div>
 			</div>
 		</div>
 	</div>
@@ -104,29 +93,29 @@ include(SHARED_PATH . '/public_header.php');
 						<div class="borderfull-width"></div>
 						<div class="panel-heading">Company Information</div>
 						<hr>
-						<form method="post" action="add_company.php" enctype="multipart/form-data">
+						<form method="post"  enctype="multipart/form-data">
 						<div class="form-group col-md-6 p-l">
 							<label>Company Name</label>
-							<input type="text" name="c_name" class="form-control" required="required" data-validation-required-message="Please Enter You Comapny Name" />
+							<input type="text" name="c_name" class="form-control" value="<?php echo $company['c_name']; ?>" required="required" data-validation-required-message="Please Enter You Comapny Name" />
 						</div>
 						<div class="form-group col-md-6 p-r">
 							<label>Address</label>
-							<input type="text" name="c_address" class="form-control" required="required" data-validation-required-message="Please Enter Company Address "/>
+							<input type="text" name="c_address" class="form-control" value="<?php echo $company['c_address']; ?>" required="required" data-validation-required-message="Please Enter Company Address" />
 						</div>
 						<div class="form-group col-md-6 p-l">
 							<label>Email</label>
 							<div class="input-group">
 							<div class="input-group-addon">https://</div>
-							<input type="text" name="c_email" class="form-control" required="required"  data-validation-required-message="Please Enter The Email Address"/>
+							<input type="text" name="c_email" class="form-control" value="<?php echo $company['c_email']; ?>" required="required"  data-validation-required-message="Please Enter The Email Address" />
 						</div>
 						</div>
 						<div class="form-group col-md-6 p-r">
 							<label>Phone Number</label>
-							<input type="text" name="c_phone" class="form-control" required="required" data-validation-required-message="Please Enter The Phone Number" />
+							<input type="text" name="c_phone" class="form-control" value="<?php echo $company['c_phone'] ; ?>" required="required" data-validation-required-message="Please Enter The Phone Number" />
 						</div>
 						<div class="form-group col-md-6 p-l">
 							<label>Website (Optional)</label>
-								<input type="text" name="c_web" class="form-control" placeholder="eg. http://www.example.com" />
+							<input type="text" name="c_web" class="form-control" value="<?php echo $company['c_fb']; ?>" placeholder="eg. www.example.com" />
 						</div>
 						<div class="form-group col-md-6 p-r">
 							<label>Company Logo <span>(max. file size 3MB)</span></label>
@@ -134,39 +123,43 @@ include(SHARED_PATH . '/public_header.php');
 						</div>
 						<div class="form-group social_icon col-md-6 p-l">
 							<label>Facebook <span>(Optional)</span></label>
-								<input type="text" name="c_fb" class="form-control" placeholder="Enter page URL" />
-								<a href="#"><i class="fa fa-facebook"></i></a>
+							<input type="text" name="c_fb" class="form-control" value="<?php echo $company['c_twitter']; ?>" placeholder="Enter page URL" />
+							<a href="#"><i class="fa fa-facebook"></i></a>
 						</div>
 						<div class="form-group social_icon twiiter col-md-6 p-r">
 							<label>Twitter <span>(Optional)</span></label>
-							<input type="text" name="c_twitter" class="form-control" placeholder="@companyname" />
+							<input type="text" name="c_twitter" class="form-control" value="<?php echo $company['c_twitter']; ?>" placeholder="@companyname" />
 							<a href="#"><i class="fa fa-twitter"></i></a>
 						</div>
 						<div class="form-group social_icon linkedin col-md-6 p-l">
 							<label>Linked in <span>(Optional)</span></label>
-							<input type="text" name="c_linkedin" class="form-control" placeholder="Enter page URL" />
+							<input type="text" name="c_linkedin" class="form-control" value="<?php echo $company['c_gplus']; ?>" placeholder="Enter page URL" />
 							<a href="#"><i class="fa fa-linkedin"></i></a>
 						</div>
 						<div class="form-group social_icon google_plus col-md-6 p-r">
 							<label>Google + <span>(Optional)</span></label>
-							<input type="text" name="c_gplus" class="form-control" placeholder="Enter page URL" />
+							<input type="text" name="c_gplus" class="form-control" value="<?php echo $company['c_gplus']; ?>" placeholder="Enter page URL" />
 							<a href="#"><i class="fa fa-google"></i></a>
 						</div>
 						<div class="form-group col-md-12 p-l p-r">
 							<label>Job Description</label>
-							<textarea name="c_description" class="form-control" data-validation-required-message="Please Enter The Description" placeholder="Page Body" required ></textarea>
+							<textarea name="c_description" class="form-control" required="required" data-validation-required-message="Please Enter The Description" placeholder="Page Body"> <?php echo $company['c_description']; ?></textarea>
 						</div>
 						<div class="form-group col-md-12 p-l p-r">
 							<label>Business Details</label>
-							<textarea name="c_business" class="form-control" required="required" data-validation-required-message="Please Enter The Description" placeholder="Page Body"></textarea>
+							<textarea name="c_business" class="form-control" required="required" data-validation-required-message="Please Enter The Description" placeholder="Page Body">
+								<?php echo $company['c_business']; ?>
+							</textarea>
 						</div>
 						<div class="form-group col-md-12 p-l p-r">
 							<label>What We Do <span>*in bullets form</span></label>
-							<textarea name="c_wwd" class="form-control" required="required" data-validation-required-message="Please Enter The Description" placeholder="Page Body"></textarea>
+							<textarea name="c_wwd" class="form-control" required="required" data-validation-required-message="Please Enter The Description" placeholder="Page Body">
+								<?php echo $company['c_wwd']; ?>
+							</textarea>
 						</div>
 						<div class="col-md-12 p-l">
 							<!-- <a class="btn btn-default">Preview Your Profile</a> -->
-							<button type="submit" name="submit" class="btn btn-default">Preview Your Profile</button>
+							<button type="submit" name="update" class="btn btn-default">Preview Your Profile</button>
 						</div>
 						</form>
 					</div>

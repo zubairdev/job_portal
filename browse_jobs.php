@@ -1,6 +1,6 @@
-<?php require_once('private/initialize.php'); ?>
+<?php require_once('private/initialize.php');
 
-<?php include(SHARED_PATH . '/public_header.php'); ?>
+include(SHARED_PATH . '/public_header.php'); ?>
 
 <div class="page_banner banner listing-banner">
     <div class="container">
@@ -17,15 +17,23 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="job-search">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Job title / keywords">
-                            <div class="search_icon"><span class="ti-briefcase"></span></div>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="City / zip code">
-                            <div class="search_icon"><span class="ti-location-pin"></span></div>
-                        </div>
-                        <a href="#" class="btn btn-default">Search Job Results</a>
+                        <form method="POST" action ="browse_jobs.php">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="search" placeholder="Job title / keywords">
+                                <div class="search_icon"><span class="ti-briefcase"></span></div>
+                            </div>
+                             <div class="form-group">
+                                <select class="form-control" name="city">
+                                  <option value="">Choose City</option>
+                                  <option value="Lahore">Lahore</option>
+                                  <option value="Faislabad">Faislabad</option>
+                                  <option value="Karachi">Karachi</option>
+                                  <option value="Ali Chak">Ali Chak</option>
+                                </select>
+                                <div class="search_icon"><span class="ti-location-pin"></span></div>
+                            </div>
+                            <button type="submit" name="sub_search" class="btn btn-default">Search Job Results</button>
+                        </form>
                     </div>
                     <div class="job_title">Categories</div>
                     <div class="borderfull-width"></div>
@@ -223,159 +231,20 @@
         </div>
         <div class="clearfix"></div>
         <div class="page_listing">
-            <div class="sorting_content">
-             <div class="tab-image"><img src="images/home/img1.jpg" alt="" class="img-responsive"></div>
-             <div class="overflow">
-                 <div class="text-shorting">
-                     <h1 class="col-md-6 col-sm-7"><a href="job_detail.php">Team of PHP MySQL Developers</a><p>Agricultural Sceences</p> </h1>
-                     <div class="work-time text-center col-md-2">Full Time</div>
-                 </div>
-                 <div class="bottom_text">
-                    <div class="contact_details col-md-4 col-sm-4">
-                        <span><strong>Sallery: <i class="fa fa-money"></i></strong> $7,50,000 / P.A</span>
-                    </div>
-                    <div class="contact_details col-md-8 col-sm-8">
-                        <span><strong>Skills:</strong> Desinger, Developer, Html, Javascript, Jquery, CSS</span>
-                    </div>
-                    <p class="col-md-12">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis ultricies nec pellentesque eu.</p>
-                </div>
-            </div>
-        </div>
-        <div class="sorting_content">
-         <div class="tab-image"><img src="images/home/img2.jpg" alt="" class="img-responsive"></div>
-         <div class="overflow">
-             <div class="text-shorting">
-                 <h1 class="col-md-6 col-sm-7"><a href="job_detail.php">Urgent Opening for PHP Developer</a><p>Agricultural Sceences</p> </h1>
-                 <div class="work-time part text-center col-md-2">Part Time</div>
-             </div>
-             <div class="bottom_text">
-                <div class="contact_details col-md-4 col-sm-4">
-                    <span><strong>Sallery: <i class="fa fa-money"></i></strong> $7,50,000 / P.A</span>
-                </div>
-                <div class="contact_details col-md-8 col-sm-8">
-                    <span><strong>Skills:</strong> Desinger, Developer, Html, Javascript, Jquery, CSS</span>
-                </div>
-                <p class="col-md-12">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis ultricies nec pellentesque eu.</p>
-            </div>
-        </div>
-    </div> 
-    <div class="sorting_content">
-     <div class="tab-image"><img src="images/home/img3.jpg" alt="" class="img-responsive"></div>
-     <div class="overflow">
-         <div class="text-shorting">
-             <h1 class="col-md-6 col-sm-7"><a href="">Urgent Require- Web Developer</a><p>Agricultural Sceences</p> </h1>
-             <div class="work-time part text-center col-md-2">Part Time</div>
-         </div>
-         <div class="bottom_text">
-            <div class="contact_details col-md-4 col-sm-4">
-                <span><strong>Sallery: <i class="fa fa-money"></i></strong> $7,50,000 / P.A</span>
-            </div>
-            <div class="contact_details col-md-8 col-sm-8">
-                <span><strong>Skills:</strong> Desinger, Developer, Html, Javascript, Jquery, CSS</span>
-            </div>
-            <p class="col-md-12">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis ultricies nec pellentesque eu.</p>
-        </div>
-    </div>
-</div> 
-<div class="sorting_content">
- <div class="tab-image"><img src="images/home/img4.jpg" alt="" class="img-responsive"></div>
- <div class="overflow">
-     <div class="text-shorting">
-         <h1 class="col-md-6 col-sm-7"><a href="">Nodejs,Angularjs Developer</a><p>Agricultural Sceences</p> </h1>
-         <div class="work-time text-center col-md-2">Full Time</div>
-     </div>
-     <div class="bottom_text">
-        <div class="contact_details col-md-4 col-sm-4">
-            <span><strong>Sallery: <i class="fa fa-money"></i></strong> $7,50,000 / P.A</span>
-        </div>
-        <div class="contact_details col-md-8 col-sm-8">
-            <span><strong>Skills:</strong> Desinger, Developer, Html, Javascript, Jquery, CSS</span>
-        </div>
-        <p class="col-md-12">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis ultricies nec pellentesque eu.</p>
-    </div>
-</div>
-</div>
-<div class="sorting_content">
- <div class="tab-image"><img src="images/home/img5.jpg" alt="" class="img-responsive"></div>
- <div class="overflow">
-     <div class="text-shorting">
-         <h1 class="col-md-6 col-sm-7"><a href="">Software Developer -IT Co</a><p>Agricultural Sceences</p> </h1>
-         <div class="work-time Free text-center col-md-2">Freelancer</div>
-     </div>
-     <div class="bottom_text">
-        <div class="contact_details col-md-4 col-sm-4">
-            <span><strong>Sallery: <i class="fa fa-money"></i></strong> $7,50,000 / P.A</span>
-        </div>
-        <div class="contact_details col-md-8 col-sm-8">
-            <span><strong>Skills:</strong> Desinger, Developer, Html, Javascript, Jquery, CSS</span>
-        </div>
-        <p class="col-md-12">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis ultricies nec pellentesque eu.</p>
-    </div>
-</div>
-</div>
-<div class="sorting_content">
- <div class="tab-image"><img src="images/home/img6.jpg" alt="" class="img-responsive"></div>
- <div class="overflow">
-     <div class="text-shorting">
-         <h1 class="col-md-6 col-sm-7"><a href="">Website Developer and Head of Developers</a><p>Agricultural Sceences</p> </h1>
-         <div class="work-time text-center col-md-2">Full Time</div>
-     </div>
-     <div class="bottom_text">
-        <div class="contact_details col-md-4 col-sm-4">
-            <span><strong>Sallery: <i class="fa fa-money"></i></strong> $7,50,000 / P.A</span>
-        </div>
-        <div class="contact_details col-md-8 col-sm-8">
-            <span><strong>Skills:</strong> Desinger, Developer, Html, Javascript, Jquery, CSS</span>
-        </div>
-        <p class="col-md-12">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis ultricies nec pellentesque eu.</p>
-    </div>
-</div>
-</div>
-<div class="sorting_content">
- <div class="tab-image"><img src="images/home/img7.jpg" alt="" class="img-responsive"></div>
- <div class="overflow">
-     <div class="text-shorting">
-         <h1 class="col-md-6 col-sm-7"><a href="">Software Developer-Winforms-wpf</a><p>Agricultural Sceences</p> </h1>
-         <div class="work-time text-center col-md-2">Full Time</div>
-     </div>
-     <div class="bottom_text">
-        <div class="contact_details col-md-4 col-sm-4">
-            <span><strong>Sallery: <i class="fa fa-money"></i></strong> $7,50,000 / P.A</span>
-        </div>
-        <div class="contact_details col-md-8 col-sm-8">
-            <span><strong>Skills:</strong> Desinger, Developer, Html, Javascript, Jquery, CSS</span>
-        </div>
-        <p class="col-md-12">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis ultricies nec pellentesque eu.</p>
-    </div>
-</div>
-</div>
-<div class="sorting_content">
- <div class="tab-image"><img src="images/home/img7.jpg" alt="" class="img-responsive"></div>
- <div class="overflow">
-     <div class="text-shorting">
-         <h1 class="col-md-6 col-sm-7"><a href="">Software Developer -Leading IT Company</a><p>Agricultural Sceences</p> </h1>
-         <div class="work-time part text-center col-md-2">part Time</div>
-     </div>
-     <div class="bottom_text">
-        <div class="contact_details col-md-4 col-sm-4">
-            <span><strong>Sallery: <i class="fa fa-money"></i></strong> $7,50,000 / P.A</span>
-        </div>
-        <div class="contact_details col-md-8 col-sm-8">
-            <span><strong>Skills:</strong> Desinger, Developer, Html, Javascript, Jquery, CSS</span>
-        </div>
-        <p class="col-md-12">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis ultricies nec pellentesque eu.</p>
-    </div>
-</div>
-</div>
+            <?php
+            if (is_post_request()) {
+                find_job_through_search();
+            } else {
+                find_all_job();
+            }
+                
+            ?>
 </div>
 <ul class="pagination pull-right">
     <li class="active"><a href="#"><i class="fa fa-angle-left"></i></a></li>
     <li><a href="#">1</a></li>
     <li><a href="#">2</a></li>
     <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">...</a></li>
-    <li><a href="#">20</a></li>
     <li class="active"><a href="#"><i class="fa fa-angle-right"></i></a></li>    
 </ul>
 </div>

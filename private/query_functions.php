@@ -1,4 +1,16 @@
 <?php
+function find_user_by_id($session_id) {
+    global $db;
+
+    $sql = "SELECT * FROM user ";
+    $sql .= "WHERE u_id='" . db_escape($db, $session_id) . "'";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    $user = mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+    return $user; // returns an assoc. array
+
+}
 
 function insert_resume($resume) {
 	global $db;
@@ -220,11 +232,11 @@ function insert_company($company) {
     }
 }
 
-function find_company_by_id($id) {
+function find_company_by_id($company_id) {
     global $db;
 
     $sql = "SELECT * FROM company ";
-    $sql .= "WHERE c_id='" . db_escape($db, $id) . "'";
+    $sql .= "WHERE c_id='" . db_escape($db, $company_id) . "'";
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
     $company = mysqli_fetch_assoc($result);
@@ -232,6 +244,39 @@ function find_company_by_id($id) {
     return $company; // returns an assoc. array
 
 }
+
+function update_company_by_id($company) {
+    global $db;
+
+    $sql = "UPDATE company SET ";
+    $sql .= "c_name='" . db_escape($db, $company['c_name']) . "', ";
+    $sql .= "c_address='" . db_escape($db, $company['c_address']) . "', ";
+    $sql .= "c_email='" . db_escape($db, $company['c_email']) . "', ";
+    $sql .= "c_phone='" . db_escape($db, $company['c_phone']) . "', ";
+    $sql .= "c_web='" . db_escape($db, $company['c_web']) . "', ";
+    $sql .= "photo='" . db_escape($db, $company['photo']) . "', ";
+    $sql .= "c_fb='" . db_escape($db, $company['c_fb']) . "', ";
+    $sql .= "c_twitter='" . db_escape($db, $company['c_twitter']) . "', ";
+    $sql .= "c_linkedin='" . db_escape($db, $company['c_linkedin']) . "', ";
+    $sql .= "c_gplus='" . db_escape($db, $company['c_gplus']) . "', ";
+    $sql .= "c_description='" . db_escape($db, $company['c_description']) . "', ";
+    $sql .= "c_business='" . db_escape($db, $company['c_business']) . "', ";
+    $sql .= "c_wwd='" . db_escape($db, $company['c_wwd']) . "' ";
+    $sql .= "WHERE c_id='" . db_escape($db, $company['id']) . "' ";
+    $sql .= "LIMIT 1";
+
+    $result = mysqli_query($db, $sql);
+    // For UPDATE statements, $result is true/false
+    if($result) {
+      return true;
+    } else {
+      // UPDATE failed
+      echo mysqli_error($db);
+      db_disconnect($db);
+      exit;
+    }
+}
+
 
 function find_company_by_user_id($id) {
     global $db;
@@ -258,6 +303,54 @@ function company_validation($session_id) {
     return $company;
 }
 
+function insert_job($job) {
+    global $db;
+
+    $sql = "INSERT INTO job ";
+    $sql .= "(company_id, j_email, j_title, j_type, j_category, j_minexp, j_maxexp, j_website, j_minsalary, j_maxsalary, j_location, j_skills, j_hours, j_desp, j_resp, j_req, j_date) ";
+    $sql .= "VALUES (";
+    $sql .= "'" . db_escape($db, $job['company_id']). "',";
+    $sql .= "'" . db_escape($db, $job['j_email']) . "',";
+    $sql .= "'" . db_escape($db, $job['j_title']) . "',";
+    $sql .= "'" . db_escape($db, $job['j_type']) . "',";
+    $sql .= "'" . db_escape($db, $job['j_category']) . "',";
+    $sql .= "'" . db_escape($db, $job['j_minexp']) . "',";
+    $sql .= "'" . db_escape($db, $job['j_maxexp']) . "',";
+    $sql .= "'" . db_escape($db, $job['j_website']) . "',";
+    $sql .= "'" . db_escape($db, $job['j_minsalary']) . "',";
+    $sql .= "'" . db_escape($db, $job['j_maxsalary']) . "',";
+    $sql .= "'" . db_escape($db, $job['j_location']) . "',";
+    $sql .= "'" . db_escape($db, $job['j_skills']) . "',";
+    $sql .= "'" . db_escape($db, $job['j_hours']) . "',";
+    $sql .= "'" . db_escape($db, $job['j_desp']) . "',";
+    $sql .= "'" . db_escape($db, $job['j_resp']) . "',";
+    $sql .= "'" . db_escape($db, $job['j_desp']) . "',";
+    $sql .= "'" . db_escape($db, $job['j_date']) . "'";
+    $sql .= ")";
+
+    $result = mysqli_query($db, $sql);
+    if ($result) {
+        return true;
+    } else {
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+    }
+}
+
+function find_job_by_u_id($id) {
+    global $db;
+
+    $sql = "SELECT * FROM job ";
+    $sql .= "WHERE j_id ='" . db_escape($db, $id) . "' ";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    $resume = mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+    return $resume; // returns an assoc. array
+}
+
+
 function find_all_user() {
     global $db;
 
@@ -270,5 +363,115 @@ function find_all_user() {
     return $user;
 }
 
+function find_all_job() {
+    global $db;
+
+    $sql = "SELECT * FROM job,company WHERE company.c_id = job.company_id";
+    $result = mysqli_query($db, $sql);
+    while ($row = mysqli_fetch_array($result)) {
+
+        $title = $row['j_title'];
+        $category = $row['j_category'];
+        $type = $row['j_type'];
+        $minslary = $row['j_minsalary'];
+        $maxsalry = $row['j_maxsalary'];
+        $desp = $row['j_desp'];
+        $photo = $row['photo'];
+        $skills = $row['j_skills'];
+        $location = $row['j_location'];
+        
+        echo "    <div class='sorting_content'>
+             <div class='tab-image'><img src='images/company/logo/$photo' alt='' class='img-responsive' style = 'height: 100px;'></div>
+             <div class='overflow'>
+                 <div class='text-shorting'>
+                     <h1 class='col-md-6 col-sm-7'><a href='job_detail.php'>$title</a><p>$category</p> </h1>
+                     <div class='work-time text-center col-md-2'>$type</div>
+                 </div>
+                 <div class='bottom_text'>
+                    <div class='contact_details col-md-4 col-sm-4'>
+                        <span><strong><i class='fa fa-money'></i></strong> $minslary ' - '
+                        $maxsalry</span>
+                    </div>
+                    <div class='contact_details col-md-6 col-sm-6'>
+                        <span><strong>Skills:</strong> $skills</span>
+                    </div>
+                    <div class='contact_details col-md-2 col-sm-2'>
+                        <span><strong><i class='fa fa-map-marker'></i></strong> $location</span>
+                    </div>
+                    <p class='col-md-12'> $desp</p>
+                </div>
+            </div>
+        </div>";
+    }
+}
+
+function find_job_through_search() {
+    global $db;
+    if(isset($_POST['sub_search'])){
+
+        $search = $_POST['search'];
+        $city = $_POST['city'];
+        $sql = "SELECT * FROM job,company WHERE company.c_id = job.company_id AND job.j_location = '$city' AND job.j_title LIKE '%$search%'";
+        $result = mysqli_query($db, $sql);
+        while ($row = mysqli_fetch_array($result)) {
+
+        $title = $row['j_title'];
+        $category = $row['j_category'];
+        $type = $row['j_type'];
+        $minslary = $row['j_minsalary'];
+        $maxsalry = $row['j_maxsalary'];
+        $desp = $row['j_desp'];
+        $skills = $row['j_skills'];
+        $place = $row['j_location'];
+        $photo = $row['photo'];
+        
+        echo "    <div class='sorting_content'>
+             <div class='tab-image'><img src='images/company/logo/$photo' alt='' style = 'height: 100px;' class='img-responsive'></div>
+             <div class='overflow'>
+                 <div class='text-shorting'>
+                     <h1 class='col-md-6 col-sm-7'><a href='job_detail.php'>$title</a><p>$category</p> </h1>
+                     <div class='work-time text-center col-md-2'>$type</div>
+                 </div>
+                 <div class='bottom_text'>
+                    <div class='contact_details col-md-4 col-sm-4'>
+                        <span><strong>Sallery: <i class='fa fa-money'></i></strong> $minslary ' - '$maxsalry</span>
+                    </div>
+                    <div class='contact_details col-md-5 col-sm-5'>
+                        <span><strong>Skills:</strong> $skills</span>
+                    </div>
+                     <div class='contact_details col-md-3 col-sm-3'>
+                        <span><strong>Location:</strong> $place</span>
+                    </div>
+                    <p class='col-md-12'> $desp</p>
+                </div>
+            </div>
+        </div>";
+    }
+        }
+
+}
+
+function view_all_jobs_assoc() {
+    global $db;
+
+    $sql = "SELECT * FROM job,company WHERE company.c_id = job.company_id";
+    $run = mysqli_query($db, $sql);
+    while ($row = mysqli_fetch_array($run)) {
+        $title = $row['j_title'];
+        $category = $row['j_category'];
+        $type = $row['j_type'];
+        $place = $row['j_location'];
+        $photo = $row['photo'];
+
+        echo "<tr>
+                <td><div class='tab-image'><img src='images/company/logo/$photo' alt= '' class='img-responsive' style = 'height: 100px;' /></div>
+                <h1> $title <p>$category</p></h1></td>
+                <td class='work-time'>$type</td>
+                <td><span class='ti-location-pin'></span> $place, Pakistan</td>
+                <td><a href='' class='table-btn-default'>View Job</a></td>
+            </tr>";
+
+    }
+}
 
 ?>
