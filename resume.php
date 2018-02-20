@@ -1,6 +1,6 @@
 <?php require_once('private/initialize.php');
 
-// require_login();
+require_login();
 
 if (isset($_GET['id'])) {
 
@@ -8,22 +8,18 @@ if (isset($_GET['id'])) {
 
     $session_id = $_SESSION['u_id'];
 
-    $sql = "SELECT * FROM resume ";
-    $sql .= "WHERE r_id='" . db_escape($db, $id) . "' ";
-    $result = mysqli_query($db, $sql);
-    if ($result) {
-        $row = mysqli_fetch_assoc($result);
-        $resume_u_id = $row['u_id'];
-        $r_id = $row['r_id'];
-    }
+    // fetch $resume_u_id to match session_id and resume_u_id
+    $resume_set = find_resume_by_id($id);
+    $resume_u_id = $resume_set['u_id'];    
 
     // Now take out exact match result
 
-    if ($session_id == $resume_u_id) {
-        $resume = find_resume_by_id($id);
-    } else {
-        redirect_to(url_for('candidates.php'));
-    } // if result not match
+    if ($session_id != $resume_u_id) {
+        redirect_to(url_for('/candidates.php'));
+    }
+
+    $resume = find_resume_by_id($id);
+
 
     echo 'URL ID: ' . $id . '<br>'; // from resume table
     echo 'Session ID: ' . $session_id . '<br>'; // from user table (Session)
@@ -73,11 +69,11 @@ include(SHARED_PATH . '/public_header.php');
                                             <div class="Resume">
                                                 <h1>My Account</h1>
                                                 <ul class="unstyled">
-                                                    <li><a href="resume.php?id=<?php echo $r_id; ?>"><i class="fa fa-caret-right"></i> My Profile</a></li>
-                                                    <li><a href="edit_resume.php?id=<?php echo $r_id; ?>"><i class="fa fa-caret-right"></i> Edit Profile</a></li>
+                                                    <li><a href="resume.php?id=<?php echo $resume['r_id']; ?>"><i class="fa fa-caret-right"></i> My Profile</a></li>
+                                                    <li><a href="edit_resume.php?id=<?php echo $resume['r_id']; ?>"><i class="fa fa-caret-right"></i> Edit Profile</a></li>
                                                     <li><a href="#"><i class="fa fa-caret-right"></i> View All applied Jobs</a></li>
-                                                    <li><a href="#"><i class="fa fa-caret-right"></i> Change Password</a></li>
-                                                    <li class="border-none"><a href="#"><i class="fa fa-caret-right"></i> Sign Out</a></li>
+                                                    <li><a href="change_password.php?id=<?php echo $resume['r_id']; ?>"><i class="fa fa-caret-right"></i> Change Password</a></li>
+                                                    <li class="border-none"><a href="userout.php"><i class="fa fa-caret-right"></i> Sign Out</a></li>
                                                 </ul>
                                             </div>
                                         </section>
@@ -87,22 +83,22 @@ include(SHARED_PATH . '/public_header.php');
                                     <div class="panel-body">
                                         <div class="page-heading"><h2>Basic Information</h2>
                                         <div class="contact_details col-md-6 p-l">
-                                            <span><strong>Job Title:</strong> <?php echo $resume['r_job_title']; ?></span>
+                                            <span><strong>Job Title: </strong> <?php echo $resume['r_job_title']; ?></span>
                                         </div>
                                         <div class="contact_details col-md-6 p-l">
-                                            <span><strong>Job Type:</strong> <?php echo $resume['r_job_type']; ?></span>
+                                            <span><strong>Job Type: </strong> <?php echo $resume['r_job_type']; ?></span>
                                         </div>
                                         <div class="contact_details col-md-6 p-l">
-                                            <span><strong>Position:</strong> <?php echo $resume['r_postion']; ?></span>
+                                            <span><strong>Position: </strong> <?php echo $resume['r_postion']; ?></span>
                                         </div>
                                         <div class="contact_details col-md-6 p-l">
-                                            <span><strong>Job Category:</strong> <?php echo $resume['r_jobcat']; ?></span>
+                                            <span><strong>Job Category: </strong> <?php echo $resume['r_jobcat']; ?></span>
                                         </div>
                                         <div class="contact_details col-md-6 p-l">
-                                            <span><strong>Experience:</strong><?php echo $resume['r_yearExp']; ?></span>
+                                            <span><strong>Experience: </strong><?php echo $resume['r_yearExp']; ?></span>
                                         </div>
                                         <div class="contact_details col-md-6 p-l">
-                                            <span><strong>Salary Package:</strong><?php echo $resume['r_exptsalry']; ?></span>
+                                            <span><strong>Salary Package: </strong><?php echo $resume['r_exptsalry']; ?></span>
                                         </div>
                                         <div class="contact_details col-md-6 p-l">
                                             <span><strong>Skills: </strong><?php echo $resume['r_skills']; ?></span>

@@ -6,8 +6,19 @@ require_login();
 if (!isset($_GET['id'])) {
 	redirect_to(url_for('index.php'));
 }
-if(isset($_GET['id'])){
+if (isset($_GET['id'])) {
 $id = $_GET['id'];
+$session_id = $_SESSION['u_id'];
+
+// fetch $resume_u_id to match session_id and resume_u_id
+$resume_set = find_resume_by_id($id);
+$resume_u_id = $resume_set['u_id'];
+
+if ($session_id != $resume_u_id) {
+    redirect_to(url_for('candidates.php'));
+}
+
+
 $resume = find_resume_by_id($id);
 $old_photo = $resume['r_photo'];
 }
@@ -66,7 +77,10 @@ if (is_post_request()) {
     	//var_dump($errors);
   	}
 
+} else {
+	// do nothing
 }
+
 ?>
 
 

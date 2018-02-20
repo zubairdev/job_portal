@@ -37,8 +37,6 @@ $c_check = $company['c_check'];
 						<ul class="unstyled">
 							<li><a href="#"><i class="fa fa-caret-right"></i> My Profile</a></li>
 							<li><a href="#"><i class="fa fa-caret-right"></i> Edit Profile</a></li>
-							<li><a href="#"><i class="fa fa-caret-right"></i> Notifications</a></li>
-							<li><a href="#"><i class="fa fa-caret-right"></i> Favorite Candidates</a></li>
 							<li><a href="#"><i class="fa fa-caret-right"></i> Manage Jobs</a></li>
 							<li class="active"><a href="#"><i class="fa fa-caret-right"></i> Manage Applications</a></li>
 							<li><a href="#"><i class="fa fa-caret-right"></i> Change Password</a></li>
