@@ -122,6 +122,7 @@ function update_resume_by_id($resume) {
     $sql .= "r_mark3='" . db_escape($db, $resume['r_mark3']) . "', ";
     $sql .= "r_year3='" . db_escape($db, $resume['r_year3']) . "' ";
     $sql .= "WHERE r_id='" . db_escape($db, $resume['id']) . "' ";
+    $sql .= "LIMIT 1";
 
     $result = mysqli_query($db, $sql);
     // For UPDATE statements, $result is true/false
@@ -198,6 +199,37 @@ function find_user_by_email($email) {
     $user = mysqli_fetch_assoc($result); // find first
     mysqli_free_result($result);
     return $user; // returns an assoc. array
+}
+
+function find_all_user() {
+    global $db;
+
+    $sql = "SELECT * FROM user";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    $user = mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+
+    return $user;
+}
+
+function update_user_pass_by_id($confirm_pass, $id) {
+    global $db;
+
+    $sql = "UPDATE user SET ";
+    $sql .= "u_pass='" . db_escape($db, $confirm_pass) . "', ";
+    $sql .= "WHERE u_id='" . db_escape($db, $id) . "' ";
+    $sql .= "LIMIT 1";
+    $result = mysqli_query($db, $sql);
+
+    if($result) {
+      return true;
+    } else {
+      // UPDATE failed
+      echo mysqli_error($db);
+      db_disconnect($db);
+      exit;
+    }
 }
 
 function insert_company($company) {
@@ -303,6 +335,7 @@ function company_validation($session_id) {
     return $company;
 }
 
+<<<<<<< HEAD
 function insert_job($job) {
     global $db;
 
@@ -473,5 +506,7 @@ function view_all_jobs_assoc() {
 
     }
 }
+=======
+>>>>>>> d5e118c60d5f0cfb790a334192fe26e631a7edc2
 
 ?>
