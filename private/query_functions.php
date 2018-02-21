@@ -290,12 +290,10 @@ function insert_company($company) {
     global $db;
 
     $sql = "INSERT INTO company ";
-    $sql .= "(user_id, c_name, c_address, c_email, c_phone, c_web, photo, c_fb, c_twitter, c_linkedin, c_gplus, c_description, c_business, c_wwd) ";
+    $sql .= "(user_id, c_address, c_phone, c_web, photo, c_fb, c_twitter, c_linkedin, c_gplus,  c_business, c_wwd) ";
     $sql .= "VALUES (";
     $sql .= "'" . db_escape($db, $company['user_id']) . "',";
-    $sql .= "'" . db_escape($db, $company['c_name']) . "',";
     $sql .= "'" . db_escape($db, $company['c_address']) . "',";
-    $sql .= "'" . db_escape($db, $company['c_email']) . "',";
     $sql .= "'" . db_escape($db, $company['c_phone']) . "',";
     $sql .= "'" . db_escape($db, $company['c_web']) . "',";
     $sql .= "'" . db_escape($db, $company['photo']) . "',";
@@ -303,7 +301,6 @@ function insert_company($company) {
     $sql .= "'" . db_escape($db, $company['c_twitter']) . "',";
     $sql .= "'" . db_escape($db, $company['c_linkedin']) . "',";
     $sql .= "'" . db_escape($db, $company['c_gplus']) . "',";
-    $sql .= "'" . db_escape($db, $company['c_description']) . "',";
     $sql .= "'" . db_escape($db, $company['c_business']) . "',";
     $sql .= "'" . db_escape($db, $company['c_wwd']) . "'";
     $sql .= ")";
@@ -393,21 +390,18 @@ function insert_job($job) {
     global $db;
 
     $sql = "INSERT INTO job ";
-    $sql .= "(company_id, j_email, j_title, j_type, j_category, j_minexp, j_maxexp, j_website, j_minsalary, j_maxsalary, j_location, j_skills, j_hours, j_desp, j_resp, j_req, j_date) ";
+    $sql .= "(company_id, j_title, j_type, j_category, j_minexp, j_maxexp, j_minsalary, j_maxsalary, j_location, j_skills, j_desp, j_resp, j_req, j_date) ";
     $sql .= "VALUES (";
     $sql .= "'" . db_escape($db, $job['company_id']). "',";
-    $sql .= "'" . db_escape($db, $job['j_email']) . "',";
     $sql .= "'" . db_escape($db, $job['j_title']) . "',";
     $sql .= "'" . db_escape($db, $job['j_type']) . "',";
     $sql .= "'" . db_escape($db, $job['j_category']) . "',";
     $sql .= "'" . db_escape($db, $job['j_minexp']) . "',";
     $sql .= "'" . db_escape($db, $job['j_maxexp']) . "',";
-    $sql .= "'" . db_escape($db, $job['j_website']) . "',";
     $sql .= "'" . db_escape($db, $job['j_minsalary']) . "',";
     $sql .= "'" . db_escape($db, $job['j_maxsalary']) . "',";
     $sql .= "'" . db_escape($db, $job['j_location']) . "',";
     $sql .= "'" . db_escape($db, $job['j_skills']) . "',";
-    $sql .= "'" . db_escape($db, $job['j_hours']) . "',";
     $sql .= "'" . db_escape($db, $job['j_desp']) . "',";
     $sql .= "'" . db_escape($db, $job['j_resp']) . "',";
     $sql .= "'" . db_escape($db, $job['j_desp']) . "',";
@@ -427,8 +421,9 @@ function insert_job($job) {
 function find_job_by_u_id($id) {
     global $db;
 
-    $sql = "SELECT * FROM job ";
-    $sql .= "WHERE j_id ='" . db_escape($db, $id) . "' ";
+    $sql = "SELECT * FROM job,company ";
+    $sql .= "WHERE job.company_id = company.c_id ";
+    $sql .= "AND j_id ='" . db_escape($db, $id) . "' ";
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
     $resume = mysqli_fetch_assoc($result);
@@ -437,17 +432,6 @@ function find_job_by_u_id($id) {
 }
 
 
-function find_all_user() {
-    global $db;
-
-    $sql = "SELECT * FROM user";
-    $result = mysqli_query($db, $sql);
-    confirm_result_set($result);
-    $user = mysqli_fetch_assoc($result);
-    mysqli_free_result($result);
-
-    return $user;
-}
 
 function find_all_job() {
     global $db;
@@ -548,17 +532,44 @@ function view_all_jobs_assoc() {
         $type = $row['j_type'];
         $place = $row['j_location'];
         $photo = $row['photo'];
+        $id = $row['j_id'];
 
         echo "<tr>
                 <td><div class='tab-image'><img src='images/company/logo/$photo' alt= '' class='img-responsive' style = 'height: 100px;' /></div>
                 <h1> $title <p>$category</p></h1></td>
                 <td class='work-time'>$type</td>
                 <td><span class='ti-location-pin'></span> $place, Pakistan</td>
-                <td><a href='' class='table-btn-default'>View Job</a></td>
+                <td><a href='job_detail.php?id=$id' class='table-btn-default'>View Job</a></td>
             </tr>";
 
     }
 }
 
+function view_all_jobs_category($cat, $id1) {
+    global $db;
+
+    $sql = "SELECT * FROM job,company WHERE company.c_id = job.company_id AND j_category = '$cat' LIMIT 5";
+    $run = mysqli_query($db, $sql);
+    while ($row = mysqli_fetch_assoc($run)) {
+        if ($row['j_id'] == $id1) { continue; }
+        else {
+        $title = $row['j_title'];
+        $category = $row['j_category'];
+        $type = $row['j_type'];
+        $place = $row['j_location'];
+        $photo = $row['photo'];
+        $idz = $row['j_id'];
+
+        echo "<tr>
+                <td><div class='tab-image'><img src='images/company/logo/$photo' alt= '' class='img-responsive' style = 'height: 100px;' /></div>
+                <h1> $title <p>$category</p></h1></td>
+                <td class='work-time'>$type</td>
+                <td><span class='ti-location-pin'></span> $place, Pakistan</td>
+                <td><a href='job_detail.php?id=$idz' class='table-btn-default'>View Job</a></td>
+            </tr>";
+
+    }
+}
+}
 
 ?>

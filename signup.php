@@ -22,9 +22,13 @@ if (is_post_request()) {
 			$user = find_user_by_email($email);
 			log_in_user($user);
 			$_SESSION['message'] = 'You have successfully created an account.';
+
 			redirect_to('c_resume.php');
 		} else {
 			$errors = $result;
+
+			redirect_to('resume.php');
+
 		}
 
 	}
