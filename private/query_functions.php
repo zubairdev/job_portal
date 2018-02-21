@@ -136,16 +136,65 @@ function update_resume_by_id($resume) {
     }
 }
 
+function validate_user($user) {
+
+    $password_required = $options['password_required'] ?? true;
+
+    if(is_blank($user['u_fname'])) {
+      $errors[] = "Full name cannot be blank.";
+    } elseif (!has_length($user['u_fname'], array('min' => 2, 'max' => 255))) {
+      $errors[] = "Full name must be between 2 and 255 characters.";
+    }
+
+    if(is_blank($user['u_email'])) {
+      $errors[] = "Email cannot be blank.";
+    } elseif (!has_length($user['u_email'], array('max' => 255))) {
+      $errors[] = "Email must be less than 255 characters.";
+    } elseif (!has_valid_email_format($user['u_email'])) {
+      $errors[] = "Email must be a valid format.";
+    }
+
+    if(is_blank($user['u_email'])) {
+      $errors[] = "Email cannot be blank.";
+    } elseif (!has_unique_email($user['u_email'], $user['u_id'] ?? 0)) {
+      $errors[] = "Email must be unique. Try another.";
+    }
+
+    if($password_required) {
+      if(is_blank($user['u_pass'])) {
+        $errors[] = "Password cannot be blank.";
+      } elseif (!has_length($user['u_pass'], array('min' => 12))) {
+        $errors[] = "Password must contain 12 or more characters";
+      } elseif (!preg_match('/[A-Z]/', $user['u_pass'])) {
+        $errors[] = "Password must contain at least 1 uppercase letter";
+      } elseif (!preg_match('/[a-z]/', $user['u_pass'])) {
+        $errors[] = "Password must contain at least 1 lowercase letter";
+      } elseif (!preg_match('/[0-9]/', $user['u_pass'])) {
+        $errors[] = "Password must contain at least 1 number";
+      } elseif (!preg_match('/[^A-Za-z0-9\s]/', $user['u_pass'])) {
+        $errors[] = "Password must contain at least 1 symbol";
+      }
+
+    }
+
+    return $errors;
+}
+
 function candidate_sign_up($candidate) {
 	global $db;
+
+    $user = $candidate;
+    $errors = validate_user($user);
+    if (!empty($errors)) {
+      return $errors;
+    }
 
 	$hashed_password = password_hash($candidate['u_pass'], PASSWORD_BCRYPT);
 
 	$sql = "INSERT INTO user ";
-	$sql .= "(u_name, u_username, u_pass, u_email, u_status, u_active) ";
+	$sql .= "(u_name, u_pass, u_email, u_status, u_active) ";
 	$sql .= "VALUES (";
 	$sql .= "'" . db_escape($db, $candidate['u_fname']) . "',";
-	$sql .= "'" . db_escape($db, $candidate['u_name']) . "',";
 	$sql .= "'" . db_escape($db, $hashed_password) . "',";
 	$sql .= "'" . db_escape($db, $candidate['u_email']) . "',";
 	$sql .= "'" . db_escape($db, $candidate['u_status']) . "',";
@@ -165,15 +214,20 @@ function candidate_sign_up($candidate) {
 function company_sign_up($company) {
 	global $db;
 
-	$hashed_password = password_hash($company['com_pass'], PASSWORD_BCRYPT);
+    $user = $company;
+    $errors = validate_user($user);
+    if (!empty($errors)) {
+      return $errors;
+    }
+    
+	$hashed_password = password_hash($company['u_pass'], PASSWORD_BCRYPT);
 
 	$sql = "INSERT INTO user ";
-	$sql .= "(u_name, u_username, u_pass, u_email, u_status, u_active) ";
+	$sql .= "(u_name, u_pass, u_email, u_status, u_active) ";
 	$sql .= "VALUES (";
-	$sql .= "'" . db_escape($db, $company['com_fname']) . "',";
-	$sql .= "'" . db_escape($db, $company['com_name']) . "',";
+	$sql .= "'" . db_escape($db, $company['u_fname']) . "',";
 	$sql .= "'" . db_escape($db, $hashed_password) . "',";
-	$sql .= "'" . db_escape($db, $company['com_email']) . "',";
+	$sql .= "'" . db_escape($db, $company['u_email']) . "',";
 	$sql .= "'" . db_escape($db, $company['u_status']) . "',";
 	$sql .= "'" . db_escape($db, $company['u_active']) . "'";
 	$sql .= ")";
@@ -201,17 +255,17 @@ function find_user_by_email($email) {
     return $user; // returns an assoc. array
 }
 
-function find_all_user() {
-    global $db;
+// function find_all_user() {
+//     global $db;
 
-    $sql = "SELECT * FROM user";
-    $result = mysqli_query($db, $sql);
-    confirm_result_set($result);
-    $user = mysqli_fetch_assoc($result);
-    mysqli_free_result($result);
+//     $sql = "SELECT * FROM user";
+//     $result = mysqli_query($db, $sql);
+//     confirm_result_set($result);
+//     $user = mysqli_fetch_assoc($result);
+//     mysqli_free_result($result);
 
-    return $user;
-}
+//     return $user;
+// }
 
 function update_user_pass_by_id($confirm_pass, $id) {
     global $db;
@@ -335,7 +389,6 @@ function company_validation($session_id) {
     return $company;
 }
 
-<<<<<<< HEAD
 function insert_job($job) {
     global $db;
 
@@ -399,7 +452,7 @@ function find_all_user() {
 function find_all_job() {
     global $db;
 
-    $sql = "SELECT * FROM job,company WHERE company.c_id = job.company_id";
+    $sql = "SELECT * FROM job, company WHERE job.company_id = company.c_id";
     $result = mysqli_query($db, $sql);
     while ($row = mysqli_fetch_array($result)) {
 
@@ -506,7 +559,6 @@ function view_all_jobs_assoc() {
 
     }
 }
-=======
->>>>>>> d5e118c60d5f0cfb790a334192fe26e631a7edc2
+
 
 ?>

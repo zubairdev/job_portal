@@ -98,19 +98,20 @@
   // * For new records, provide only the menu_name.
   // * For existing records, provide current ID as second arugment
   //   has_unique_page_menu_name('History', 4)
-  function has_unique_page_menu_name($menu_name, $current_id="0") {
-    global $db;
+  
+  // function has_unique_page_menu_name($menu_name, $current_id="0") {
+  //   global $db;
 
-    $sql = "SELECT * FROM pages ";
-    $sql .= "WHERE menu_name='" . db_escape($db, $menu_name) . "' ";
-    $sql .= "AND id != '" . db_escape($db, $current_id) . "'";
+  //   $sql = "SELECT * FROM pages ";
+  //   $sql .= "WHERE menu_name='" . db_escape($db, $menu_name) . "' ";
+  //   $sql .= "AND id != '" . db_escape($db, $current_id) . "'";
 
-    $page_set = mysqli_query($db, $sql);
-    $page_count = mysqli_num_rows($page_set);
-    mysqli_free_result($page_set);
+  //   $page_set = mysqli_query($db, $sql);
+  //   $page_count = mysqli_num_rows($page_set);
+  //   mysqli_free_result($page_set);
 
-    return $page_count === 0;
-  }
+  //   return $page_count === 0;
+  // }
 
   // has_unique_username('johnqpublic')
   // * Validates uniqueness of admins.username
@@ -120,9 +121,23 @@
   function has_unique_username($username, $current_id="0") {
     global $db;
 
-    $sql = "SELECT * FROM admins ";
-    $sql .= "WHERE username='" . db_escape($db, $username) . "' ";
-    $sql .= "AND id != '" . db_escape($db, $current_id) . "'";
+    $sql = "SELECT * FROM user ";
+    $sql .= "WHERE u_username='" . db_escape($db, $username) . "' ";
+    $sql .= "AND u_id != '" . db_escape($db, $current_id) . "'";
+
+    $result = mysqli_query($db, $sql);
+    $admin_count = mysqli_num_rows($result);
+    mysqli_free_result($result);
+
+    return $admin_count === 0;
+  }
+
+  function has_unique_email($email, $current_id="0") {
+    global $db;
+
+    $sql = "SELECT * FROM user ";
+    $sql .= "WHERE u_email='" . db_escape($db, $email) . "' ";
+    $sql .= "AND u_id != '" . db_escape($db, $current_id) . "'";
 
     $result = mysqli_query($db, $sql);
     $admin_count = mysqli_num_rows($result);

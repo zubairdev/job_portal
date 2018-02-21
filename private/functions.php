@@ -43,6 +43,21 @@ function is_get_request() {
 	return $_SERVER['REQUEST_METHOD'] == 'GET';
 }
 
+function display_errors($errors=array()) {
+  $output = '';
+  if(!empty($errors)) {
+    $output .= "<div class=\"errors alert alert-danger\" role=\"alert\">";
+    $output .= "Please fix the following errors:";
+    $output .= "<ul>";
+    foreach($errors as $error) {
+      $output .= "<li>" . $error . "</li>";
+    }
+    $output .= "</ul>";
+    $output .= "</div>";
+  }
+  return $output;
+}
+
 function get_and_clear_session_message() {
   if(isset($_SESSION['message']) && $_SESSION['message'] != '') {
     $msg = $_SESSION['message'];

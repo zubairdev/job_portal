@@ -4,9 +4,9 @@
 
 <link rel="stylesheet" media="all" href="<?php echo url_for('/stylesheet/font-awesome.min.css'); ?>" />
 
-<link rel="stylesheet" media="all" href="<?php echo url_for('/stylesheet/responsive.css'); ?>" />
-
 <link rel="stylesheet" media="all" href="<?php echo url_for('/stylesheet/style.css'); ?>" />
+
+<link rel="stylesheet" media="all" href="<?php echo url_for('/stylesheet/responsive.css'); ?>" />
 
 <link rel="stylesheet" media="all" href="<?php echo url_for('/stylesheet/themify-icons.css'); ?>" />
 

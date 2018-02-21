@@ -26,7 +26,7 @@ include(SHARED_PATH . '/public_header.php');
 							<option class="search_field" value="Karachi">Karachi</option>
 							<option class="search_field" value="Ali Chak">Ali Chak</option>
 						</select>
-						<div class="search_icon"><span class="ti-location-pin"></span></div> 
+						<div class="search_icon"><span class="ti-location-pin"></span><i class="fa fa-angle-down"></i></div> 
 					</div>
 					<div class="form-group btn-search">
 						<button type="submit" name="sub_search" class="btn btn-default">Search Job Result</button>
