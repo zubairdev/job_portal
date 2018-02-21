@@ -23,11 +23,11 @@ if (is_post_request()) {
 			log_in_user($user);
 			$_SESSION['message'] = 'You have successfully created an account.';
 
-			redirect_to('c_resume.php');
+			redirect_to('resume.php');
 		} else {
 			$errors = $result;
 
-			redirect_to('resume.php');
+			//redirect_to('resume.php');
 
 		}
 

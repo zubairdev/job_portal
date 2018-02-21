@@ -402,22 +402,30 @@ include(SHARED_PATH . '/public_header.php');
 	<section class="jobxpress">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-md-6 padding-left">
-					<div class="left-col">
-						<div class="col-text">
-							<div class="page-heading heading4">
-								<h2>Join Thousands of Companies That Realy on <span>Jobxpress</span></h2>
-								<hr>
-								<p>Sed consequat, leo eget bibendum sodales, augue cursus nunc, quis <br /> gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum <br />purus quam, scelerisque ut.</p>
-								<a href="#" class="btn Read_more">Read More</a>
-							</div> 
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 padding-left">
-					<div class="right-col"></div>
-				</div>
-			</div>
+                <div class="col-md-6 col-sm-12 col-xs-12 callout-bg-1 callout-section-left pos-relative">
+                    <div class="callout-bg"></div>
+                    <div class="jbm-callout-in jbm-callout-in-left pull-right text-left">
+                        <div class="jbm-section-title margin-top-100 margin-bottom-100 title-white">
+                            <span class="section-tit-line"></span>
+                            <h2><span class="fw-400">Recruit the</span> best candidates</h2>
+
+                            <p>More than 20.000 companies rely on our services to get the best candidates work for them. Enjoy the same facilities by registering today and your company is good to flourish and achieve success.</p>
+                            <a href="candidates.php" class="jbm-button margin-top-50">Browse Candidates</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12 callout-bg-2 callout-section-right pos-relative">
+                    <div class="callout-bg"></div>
+                    <div class="jbm-callout-in jbm-callout-in-right pull-left text-right ">
+                        <div class="jbm-section-title margin-bottom-100 margin-top-100 title-white">
+                            <span class="section-tit-line"></span>
+                            <h2><span class="fw-400">Find your</span> dream job</h2>
+                            <p>Browse  from hundreds of jobs, whetherr it is part time, full time or even freelancing. We have it all at JobMarket. Make your dreams cometrue and excel in what you love to do the best.</p>
+                            <a href="browse_jobs.php" class="jbm-button margin-top-50">Browse Jobs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 		</div>
 	</section>
 	<section class="blog">

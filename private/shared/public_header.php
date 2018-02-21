@@ -75,7 +75,7 @@
 
                                 <ul class="nav navbar-nav scrollto" style="float: right; margin: 0 5px 5px 0;">
                                     <li class="dropdown">
-                                        <a href="browse_jobs.php" class="dropdown-toggle user" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i> <?php echo $_SESSION['u_email']; ?> <i class="fa fa-angle-down"></i></a>
+                                        <a href="browse_jobs.php" class="dropdown-toggle user" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i> <?php echo $_SESSION['u_name']; ?> <i class="fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu user-dropdown">
                                             <li><a href="resume.php?id=<?php echo $resume['r_id']; ?>">View Profile</a></li>
                                             <li><a href="userout.php">Log Out</a></li>  
@@ -87,7 +87,7 @@
                             <div class="col-md-3 text-right">
                                 <ul class="nav navbar-nav scrollto" style="float: right; margin: 0 5px 5px 0;">
                                     <li class="dropdown">
-                                        <a href="browse_jobs.php" class="dropdown-toggle user" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i> <?php echo $_SESSION['u_email']; ?> <i class="fa fa-angle-down"></i></a>
+                                        <a href="browse_jobs.php" class="dropdown-toggle user" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i> <?php echo $_SESSION['u_name']; ?> <i class="fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu user-dropdown">
                                             <li><a href="employer_detail.php?company=<?php echo $company['c_id']; ?>">View Profile</a></li>
                                             <li><a href="userout.php">Log Out</a></li>   

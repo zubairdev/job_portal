@@ -104,10 +104,10 @@ include(SHARED_PATH . '/public_header.php');
 						</div>
 						<div class="form-group col-md-6 p-l">
 							<label>Email</label>
-							<div class="input-group">
-							<div class="input-group-addon">https://</div>
+							<!-- <div class="input-group"> -->
+							<!-- <div class="input-group-addon">https://</div> -->
 							<input type="text" name="c_email" class="form-control" value="<?php echo $company['c_email']; ?>" required="required"  data-validation-required-message="Please Enter The Email Address" />
-						</div>
+						<!-- </div> -->
 						</div>
 						<div class="form-group col-md-6 p-r">
 							<label>Phone Number</label>
@@ -131,10 +131,10 @@ include(SHARED_PATH . '/public_header.php');
 							<input type="text" name="c_twitter" class="form-control" value="<?php echo $company['c_twitter']; ?>" placeholder="@companyname" />
 							<a href="#"><i class="fa fa-twitter"></i></a>
 						</div>
-						<div class="form-group social_icon linkedin col-md-6 p-l">
+						<div class='form-group social_icon linkedin col-md-6 p-l'>
 							<label>Linked in <span>(Optional)</span></label>
-							<input type="text" name="c_linkedin" class="form-control" value="<?php echo $company['c_linkedin']; ?>" placeholder="Enter page URL" />
-							<a href="#"><i class="fa fa-linkedin"></i></a>
+							<input type='text' name='c_linkedin' class='form-control' value='<?php echo $company['c_linkedin']; ?>' placeholder='Enter page URL' />
+							<a href='#'><i class='fa fa-linkedin'></i></a>
 						</div>
 						<div class="form-group social_icon google_plus col-md-6 p-r">
 							<label>Google + <span>(Optional)</span></label>

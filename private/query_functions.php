@@ -439,22 +439,22 @@ function find_all_job() {
     $sql = "SELECT * FROM job, company WHERE job.company_id = company.c_id";
     $result = mysqli_query($db, $sql);
     while ($row = mysqli_fetch_array($result)) {
-
+        $id = $row['j_id'];
         $title = $row['j_title'];
         $category = $row['j_category'];
         $type = $row['j_type'];
         $minslary = $row['j_minsalary'];
         $maxsalry = $row['j_maxsalary'];
-        $desp = $row['j_desp'];
+        $desp = substr($row['j_desp'], 0, 210);
         $photo = $row['photo'];
         $skills = $row['j_skills'];
         $location = $row['j_location'];
         
         echo "    <div class='sorting_content'>
-             <div class='tab-image'><img src='images/company/logo/$photo' alt='' class='img-responsive' style = 'height: 100px;'></div>
+             <div class='tab-image img-res'><img src='images/company/logo/$photo' alt='' class='img-responsive' style = 'height: 100px;'></div>
              <div class='overflow'>
                  <div class='text-shorting'>
-                     <h1 class='col-md-6 col-sm-7'><a href='job_detail.php'>$title</a><p>$category</p> </h1>
+                     <h1 class='col-md-6 col-sm-7'><a href='job_detail.php?id=$id'>$title</a><p>$category</p> </h1>
                      <div class='work-time text-center col-md-2'>$type</div>
                  </div>
                  <div class='bottom_text'>
@@ -490,13 +490,13 @@ function find_job_through_search() {
         $type = $row['j_type'];
         $minslary = $row['j_minsalary'];
         $maxsalry = $row['j_maxsalary'];
-        $desp = $row['j_desp'];
+        $desp = substr($row['j_desp'], 0, 210);
         $skills = $row['j_skills'];
         $place = $row['j_location'];
         $photo = $row['photo'];
         
         echo "    <div class='sorting_content'>
-             <div class='tab-image'><img src='images/company/logo/$photo' alt='' style = 'height: 100px;' class='img-responsive'></div>
+             <div class='tab-image img-res'><img src='images/company/logo/$photo' alt='' style = 'height: 100px;' class='img-responsive'></div>
              <div class='overflow'>
                  <div class='text-shorting'>
                      <h1 class='col-md-6 col-sm-7'><a href='job_detail.php'>$title</a><p>$category</p> </h1>
@@ -524,7 +524,7 @@ function find_job_through_search() {
 function view_all_jobs_assoc() {
     global $db;
 
-    $sql = "SELECT * FROM job,company WHERE company.c_id = job.company_id";
+    $sql = "SELECT * FROM job,company WHERE company.c_id = job.company_id LIMIT 7";
     $run = mysqli_query($db, $sql);
     while ($row = mysqli_fetch_array($run)) {
         $title = $row['j_title'];
@@ -535,7 +535,7 @@ function view_all_jobs_assoc() {
         $id = $row['j_id'];
 
         echo "<tr>
-                <td><div class='tab-image'><img src='images/company/logo/$photo' alt= '' class='img-responsive' style = 'height: 100px;' /></div>
+                <td><div class='tab-image img-res'><img src='images/company/logo/$photo' alt= '' class='img-responsive' style = 'height: 100px;' /></div>
                 <h1> $title <p>$category</p></h1></td>
                 <td class='work-time'>$type</td>
                 <td><span class='ti-location-pin'></span> $place, Pakistan</td>
@@ -561,7 +561,7 @@ function view_all_jobs_category($cat, $id1) {
         $idz = $row['j_id'];
 
         echo "<tr>
-                <td><div class='tab-image'><img src='images/company/logo/$photo' alt= '' class='img-responsive' style = 'height: 100px;' /></div>
+                <td><div class='tab-image img-res'><img src='images/company/logo/$photo' alt= '' class='img-responsive' style = 'height: 100px;' /></div>
                 <h1> $title <p>$category</p></h1></td>
                 <td class='work-time'>$type</td>
                 <td><span class='ti-location-pin'></span> $place, Pakistan</td>

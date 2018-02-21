@@ -12,3 +12,5 @@
 
 <link rel="stylesheet" media="all" href="<?php echo url_for('/stylesheet/wysihtml5.css'); ?>" />
 
+<link rel="stylesheet" media="all" href="<?php echo url_for('/stylesheet/main.css'); ?>" />
+

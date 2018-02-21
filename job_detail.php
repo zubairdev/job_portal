@@ -93,17 +93,37 @@ include(SHARED_PATH . '/public_header.php'); ?>
                         <div class="job_title block1">
                             Company Profile
                             <a href="#"><?php echo $job['c_name'] ; ?></a>
-                        </div> 
-                        <a href="https://<?php echo $job['c_fb'] ; ?>/" target="blank" class="user-media"><i class="fa fa-facebook"></i></a>
-                        <a href="https://<?php echo $job['c_twitter'] ; ?>/" target="blank" class="user-media twitter"><i class="fa fa-twitter"></i></a>
-                        <a href="http://<?php echo $job['c_linkedin'] ; ?>/" target="blank" class="user-media linke"><i class="fa fa-linkedin"></i></a>
-                        <a href="https://<?php echo $job['c_gplus'] ; ?>/" target="blank" class="user-media google"><span class="ti-google"></span></a>
+                        </div>
+                        <?php
+                            if ($company['c_fb'] == '') {
+                                // do nothing
+                            } else { ?>
+                        <a href="<?php echo $job['c_fb'] ; ?>/" target="blank" class="user-media"><i class="fa fa-facebook"></i></a>
+                        <?php } ?>
+                        <?php
+                            if ($company['c_twitter'] == '') {
+                                // do nothing
+                            } else { ?>
+                        <a href="https://www.twitter.com/<?php echo $job['c_twitter'] ; ?>/" target="blank" class="user-media twitter"><i class="fa fa-twitter"></i></a>
+                        <?php } ?>
+                        <?php
+                            if ($company['c_linkedin'] == '') {
+                                // do nothing
+                            } else { ?>
+                        <a href="<?php echo $job['c_linkedin'] ; ?>/" target="blank" class="user-media linke"><i class="fa fa-linkedin"></i></a>
+                        <?php } ?>
+                        <?php
+                            if ($company['c_gplus'] == '') {
+                                // do nothing
+                            } else { ?>
+                        <a href="<?php echo $job['c_gplus'] ; ?>/" target="blank" class="user-media google"><span class="ti-google"></span></a>
+                        <?php } ?>
                         <div class="clearfix"></div>
                         <div class="contact_details">
                             <span><i class="fa fa-map"></i> <?php echo $job['c_address'] ; ?></span>
                             <span><i class="fa fa-phone"></i> +92 <?php echo $job['c_phone'] ; ?></span>
-                            <span><i class="fa fa-envelope"></i><a href="#"><?php echo $job['c_email'] ; ?></a></span>
-                            <span><i class="fa fa-globe"></i><a href="#"><?php echo $job['c_web'] ; ?></a></span>
+                            <span><i class="fa fa-envelope"></i><a href="mailto:<?php echo $job['c_email'] ; ?>"><?php echo $job['c_email'] ; ?></a></span>
+                            <span><i class="fa fa-globe"></i><a href="<?php echo http_check($job['c_web']); ?>" target="_blank"><?php echo $job['c_web'] ; ?></a></span>
                         </div>
                     </div>
                 </div>

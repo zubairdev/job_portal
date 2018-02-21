@@ -61,11 +61,32 @@ if (isset($_GET['company'])) {
 						<div class="col-md-9">
 							<div class="job_title">
 								<?php echo $company['c_name']; ?>
-							</div> 
-							<a href="<?php echo $company['c_fb']; ?>" target="_blank" class="user-media"><i class="fa fa-facebook"></i></a>
-							<a href="<?php echo $company['c_twitter']; ?>" target="_blank" class="user-media twitter"><i class="fa fa-twitter"></i></a>
-							<a href="<?php echo $company['c_linkedin']; ?>" target="_blank" class="user-media linke"><i class="fa fa-linkedin"></i></a>
-							<a href="<?php echo $company['c_gplus']; ?>" target="_blank" class="user-media google"><span class="ti-google"></span></a>
+							</div>
+							<?php
+							if ($company['c_fb'] == '') {
+								// do nothing
+							} else { ?>
+							<a href="<?php echo http_check($company['c_fb']); ?>" target="_blank" class="user-media"><i class="fa fa-facebook"></i></a>
+							<?php } ?>
+							<?php
+							if ($company['c_twitter'] == '') {
+								// do nothing
+							} else { ?>
+							<a href="https://www.twitter.com/<?php echo $company['c_twitter']; ?>" target="_blank" class="user-media twitter"><i class="fa fa-twitter"></i></a>
+							<?php } ?>
+							<?php
+							if ($company['c_linkedin'] == '') {
+								// do nothing
+							} else { ?>
+								<a href="<?php echo http_check($company['c_linkedin']); ?>" target="_blank" class="user-media linke"><i class="fa fa-linkedin"></i></a>
+							<?php } ?>
+
+							<?php
+							if ($company['c_gplus'] == '') {
+								// do nothing
+							} else { ?>
+							<a href="<?php echo http_check($company['c_gplus']); ?>" target="_blank" class="user-media google"><span class="ti-google"></span></a>
+							<?php } ?>
 						</div>
 					</div>
 					<!-- one 8 div -->
@@ -73,8 +94,8 @@ if (isset($_GET['company'])) {
 						<div class="contact_details">
 							<span><i class="fa fa-map"></i> <?php echo $company['c_address']; ?></span>
 							<span><i class="fa fa-phone"></i><?php echo"+92-".$company['c_phone']; ?></span>
-							<span><i class="fa fa-envelope"></i><a href="#"><?php echo $company['c_email']; ?></a></span>
-							<span><i class="fa fa-globe"></i><a href="<?php echo $company['c_web']; ?>"><?php echo $company['c_web']; ?></a></span>
+							<span><i class="fa fa-envelope"></i><a href="mailto:<?php echo $company['c_email']; ?>"><?php echo $company['c_email']; ?></a></span>
+							<span><i class="fa fa-globe"></i><a href="<?php echo http_check($company['c_web']); ?>"><?php echo $company['c_web']; ?></a></span>
 						</div>
 					</div>
 					<!-- one 4 div -->
