@@ -15,7 +15,13 @@ include(SHARED_PATH . '/public_header.php');
 	$check = $row['r_check'];
 
 	echo "value: " . $check . "<br>";
-	echo "Id of : " . $user_id;
+	echo "Id of : " . $user_id . "<br>";
+
+	$query = "SELECT * FROM user WHERE u_id = $session_id";
+	$result = mysqli_query($db, $query);
+	$fetch = mysqli_fetch_array($result);
+	$email = $fetch['u_email'];
+	echo "Email is " .$email;
 	
 	if($check == 'insert'){
 		header("location: profile.php?id=$user_id ");
@@ -31,6 +37,7 @@ if(is_post_request()) {
 		$resume['r_fname'] = $_POST['Fname'] ?? '';
 		$resume['r_lname'] = $_POST['Lname'] ?? '';
 		$resume['r_title'] = $_POST['title'] ?? '';
+		$resume['r_email'] = $_POST['email'] ?? '';
 		$resume['r_phn'] = $_POST['phone'] ?? '';
 		$resume['r_dob'] = $_POST['date'] ?? '';
 		$resume['r_addr'] = $_POST['address'] ?? '';
@@ -161,10 +168,14 @@ if(is_post_request()) {
 								<input type="text" name="phone" class="form-control" placeholder="eg. 321-1121122" required />
 							</div>
 							<div class="form-group col-md-6 p-r">
+								<label>Email</label>
+								<input type="text" name="email" class="form-control" value="<?php echo $email; ?>" />
+							</div>
+							<div class="form-group col-md-6 p-l">
 								<label>Date Of Birth</label>
 								<input type="date"  name="date" class="form-control" required />
 							</div>
-							<div class="form-group col-md-12 p-l">
+							<div class="form-group col-md-6 p-r">
 								<label>Address</label>
 								<input type="text" name="address" class="form-control" required />
 							</div>
@@ -173,29 +184,29 @@ if(is_post_request()) {
 							<hr>
 							<div class="form-group col-md-6 p-l">
 								<label>Job Title</label>
-								<input type="text" class="form-control" placeholder=""  name="jobtitle"  />
+								<input type="text" name="jobtitle" class="form-control">
 							</div>
 							<div class="form-group col-md-6 p-r">
 								<label>Job Type</label>
-								<input type="text" name="jobtype" class="form-control" />
+								<input type="text" name="jobtype" class="form-control">
 							</div>
 							<div class="form-group col-md-6 p-l">
 								<label>Years of Experience</label>
-								<input type="text" name="exp" class="form-control" />
+								<input type="text" name="exp" class="form-control">
 							</div>
 							<div class="form-group col-md-6 p-r">
 								<label>Position</label>
-								<input type="text" name="position" class="form-control" />
+								<input type="text" name="position" class="form-control">
 							</div>
 							<div class="form-group col-md-6 p-l">
 								<label>Expected Job Category</label>
-								<input type="text" name="exp-jobcat" class="form-control" />
+								<input type="text" name="exp-jobcat" class="form-control">
 							</div>
 							<div class="form-group col-md-6 p-r">
 								<label>Expected Salary Package</label>
-								<input type="text" class="form-control" name="salary" />
+								<input type="text" name="salary" class="form-control">
 							</div>
-							<div class="form-group col-md-12p-r">
+							<div class="form-group col-md-12 p-l">
 								<label>Skills</label>
 								<input type="text" class="form-control" placeholder="Skill, Skill1, Skill2, ..." name="skills" />
 							</div>

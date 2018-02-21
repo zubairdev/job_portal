@@ -282,7 +282,8 @@
 					</div>
 					<div class="clearfix"></div>
 					<div class="page_listing candidate">
-						<div class="sorting_content">
+						<?php view_all_candidates(); ?>
+						<!-- <div class="sorting_content">
 							<div class="tab-image"><img src="images/candidates/candidate-1.png" alt="" class="img-responsive"></div>
 							<div class="overflow">
 								<div class="text-shorting">
@@ -304,8 +305,8 @@
 									<p class="col-md-12 p-l">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis ultricies nec pellentesque eu.</p>
 								</div>
 							</div>
-						</div>
-						<div class="sorting_content">
+						</div> -->
+						<!-- <div class="sorting_content">
 							<div class="tab-image"><img src="images/candidates/candidate-2.png" alt="" class="img-responsive"></div>
 							<div class="overflow">
 								<div class="text-shorting">
@@ -465,7 +466,7 @@
 									<p class="col-md-12 p-l">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis ultricies nec pellentesque eu.</p>
 								</div>
 							</div>
-						</div>
+						</div> -->
 					</div>
 					<ul class="pagination pull-right">
 						<li class="active"><a href="#"><i class="fa fa-angle-left"></i></a></li>

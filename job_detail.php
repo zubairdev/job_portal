@@ -54,7 +54,7 @@ include(SHARED_PATH . '/public_header.php'); ?>
                                 <div class="col-md-4 p-l">
                                     <div class="packege">
                                         <i class="fa fa-clock-o"></i>
-                                        13 Days Ago
+                                        <?php echo $job['j_date']; ?>
                                     </div>
                                 </div>
                                 <div class="col-md-8 p-l">

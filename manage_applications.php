@@ -9,11 +9,11 @@ $company = company_validation($session_id);
 $c_id = $company['c_id'];
 $user_id = $company['user_id'];
 
-// if ($session_id != $user_id) {
-// 	redirect_to(url_for('index.php'));
-// }
+if ($session_id != $user_id) {
+	redirect_to(url_for('index.php'));
+}
 
-?>
+?> 
 
 <?php include(SHARED_PATH . '/public_header.php'); ?>
 

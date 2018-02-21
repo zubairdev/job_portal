@@ -1,4 +1,4 @@
-<?php
+<?php 
 function find_user_by_id($session_id) {
     global $db;
 
@@ -290,9 +290,11 @@ function insert_company($company) {
     global $db;
 
     $sql = "INSERT INTO company ";
-    $sql .= "(user_id, c_address, c_phone, c_web, photo, c_fb, c_twitter, c_linkedin, c_gplus,  c_business, c_wwd) ";
+    $sql .= "(user_id, c_name, c_email, c_address, c_phone, c_web, photo, c_fb, c_twitter, c_linkedin, c_gplus,  c_business, c_wwd) ";
     $sql .= "VALUES (";
     $sql .= "'" . db_escape($db, $company['user_id']) . "',";
+     $sql .= "'" . db_escape($db, $company['c_name']) . "',";
+      $sql .= "'" . db_escape($db, $company['c_email']) . "',";
     $sql .= "'" . db_escape($db, $company['c_address']) . "',";
     $sql .= "'" . db_escape($db, $company['c_phone']) . "',";
     $sql .= "'" . db_escape($db, $company['c_web']) . "',";
@@ -405,7 +407,7 @@ function insert_job($job) {
     $sql .= "'" . db_escape($db, $job['j_desp']) . "',";
     $sql .= "'" . db_escape($db, $job['j_resp']) . "',";
     $sql .= "'" . db_escape($db, $job['j_desp']) . "',";
-    $sql .= "'" . db_escape($db, $job['j_date']) . "'";
+    $sql .= "  NOW()" ;
     $sql .= ")";
 
     $result = mysqli_query($db, $sql);
@@ -572,4 +574,55 @@ function view_all_jobs_category($cat, $id1) {
 }
 }
 
+function view_jobs_of_company($id) {
+    global $db;
+    $sql = "SELECT * FROM job WHERE company_id = $id";
+    $run = mysqli_query($db, $sql);
+    while($row = mysqli_fetch_array($run)){
+        $name = $row['j_title'];
+        $title = $row['j_category'];
+        $type = $row['j_type'];
+        echo "
+        <tr>
+        <td><h1>$name <p>$title</p></h1></td>
+        <td class='work-time'>$type</td>
+        <td><span><i class='fa fa-pencil'></i></span> <span><i class='fa fa-trash'></i></span></td>
+        </tr>";
+
+    }
+}
+
+function view_all_candidates() {
+    global $db;
+
+    $sql = "SELECT * FROM resume";
+    $run = mysqli_query($db, $sql);
+    while($row =  mysqli_fetch_array($run)){
+        $fname = $row['r_fname'];
+        $lname = $row['r_lname'];
+        $title = $row['r_title'];
+        $skills = $row['r_skills'];
+        $about = $row['r_despt'];
+        $photo = $row['r_photo'];
+        echo "
+        <div class='sorting_content'>
+            <div class='tab-image img-res'><img src='images/candidates/$photo' alt='' class='img-responsive'></div>
+                    <div class='overflow'>
+                        <div class='text-shorting'>
+                                <h1>$fname $lname</h1>
+                                <ul class='unstyled'>
+                                    <li>$title</li>
+                                </ul>
+                        </div>
+                        <div class='bottom_text'>
+                            <div class='contact_details col-md-12 col-sm-12 p-l'>
+                                <span><strong>Skills: </strong > $skills</span>
+                            </div>
+                                <p class='col-md-12 p-l'>$about</p>
+                            </div>
+                        </div>
+        </div>";
+    }
+
+}
 ?>
