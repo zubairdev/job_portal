@@ -115,7 +115,7 @@ include(SHARED_PATH . '/public_header.php');
 						</div>
 						<div class="form-group col-md-6 p-l">
 							<label>Website (Optional)</label>
-							<input type="text" name="c_web" class="form-control" value="<?php echo $company['c_fb']; ?>" placeholder="eg. www.example.com" />
+							<input type="text" name="c_web" class="form-control" value="<?php echo $company['c_web']; ?>" placeholder="eg. www.example.com" />
 						</div>
 						<div class="form-group col-md-6 p-r">
 							<label>Company Logo <span>(max. file size 3MB)</span></label>
@@ -123,7 +123,7 @@ include(SHARED_PATH . '/public_header.php');
 						</div>
 						<div class="form-group social_icon col-md-6 p-l">
 							<label>Facebook <span>(Optional)</span></label>
-							<input type="text" name="c_fb" class="form-control" value="<?php echo $company['c_twitter']; ?>" placeholder="Enter page URL" />
+							<input type="text" name="c_fb" class="form-control" value="<?php echo $company['c_fb']; ?>" placeholder="Enter page URL" />
 							<a href="#"><i class="fa fa-facebook"></i></a>
 						</div>
 						<div class="form-group social_icon twiiter col-md-6 p-r">
@@ -133,18 +133,14 @@ include(SHARED_PATH . '/public_header.php');
 						</div>
 						<div class="form-group social_icon linkedin col-md-6 p-l">
 							<label>Linked in <span>(Optional)</span></label>
-							<input type="text" name="c_linkedin" class="form-control" value="<?php echo $company['c_gplus']; ?>" placeholder="Enter page URL" />
+							<input type="text" name="c_linkedin" class="form-control" value="<?php echo $company['c_linkedin']; ?>" placeholder="Enter page URL" />
 							<a href="#"><i class="fa fa-linkedin"></i></a>
 						</div>
 						<div class="form-group social_icon google_plus col-md-6 p-r">
 							<label>Google + <span>(Optional)</span></label>
 							<input type="text" name="c_gplus" class="form-control" value="<?php echo $company['c_gplus']; ?>" placeholder="Enter page URL" />
 							<a href="#"><i class="fa fa-google"></i></a>
-						</div>
-						<div class="form-group col-md-12 p-l p-r">
-							<label>Job Description</label>
-							<textarea name="c_description" class="form-control" required="required" data-validation-required-message="Please Enter The Description" placeholder="Page Body"> <?php echo $company['c_description']; ?></textarea>
-						</div>
+						</div>	
 						<div class="form-group col-md-12 p-l p-r">
 							<label>Business Details</label>
 							<textarea name="c_business" class="form-control" required="required" data-validation-required-message="Please Enter The Description" placeholder="Page Body">

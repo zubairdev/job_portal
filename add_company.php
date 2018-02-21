@@ -27,16 +27,13 @@ if (is_post_request()) {
 
 	$company = [];
 	$company['user_id'] = $session_id ?? '';
-	$company['c_name'] = $_POST['c_name'] ?? '';
 	$company['c_address'] = $_POST['c_address'] ?? '';
-	$company['c_email'] = $_POST['c_email'] ?? '';
 	$company['c_phone'] = $_POST['c_phone'] ?? '';
 	$company['c_web'] = $_POST['c_web'] ?? '';
 	$company['c_fb'] = $_POST['c_fb'] ?? '';
 	$company['c_twitter'] = $_POST['c_twitter'] ?? '';
 	$company['c_linkedin'] = $_POST['c_linkedin'] ?? '';
 	$company['c_gplus'] = $_POST['c_gplus'] ?? '';
-	$company['c_description'] = $_POST['c_description'] ?? '';
 	$company['c_business'] = $_POST['c_business'] ?? '';
 	$company['c_wwd'] = $_POST['c_wwd'] ?? '';
 
@@ -58,9 +55,7 @@ if (is_post_request()) {
 } else {
 
 	$company = [];
-	$company['c_name'] = '';
 	$company['c_address'] = '';
-	$company['c_email'] = '';
 	$company['c_phone'] = '';
 	$company['c_web'] = '';
 	$company['photo'] = '';
@@ -68,7 +63,6 @@ if (is_post_request()) {
 	$company['c_twitter'] = '';
 	$company['c_linkedin'] = '';
 	$company['c_gplus'] = '';
-	$company['c_description'] = '';
 	$company['c_business'] = '';
 	$company['c_wwd'] = '';
 
@@ -106,27 +100,16 @@ include(SHARED_PATH . '/public_header.php');
 						<hr>
 						<form method="post" action="add_company.php" enctype="multipart/form-data">
 						<div class="form-group col-md-6 p-l">
-							<label>Company Name</label>
-							<input type="text" name="c_name" class="form-control" required="required" data-validation-required-message="Please Enter You Comapny Name" />
-						</div>
-						<div class="form-group col-md-6 p-r">
-							<label>Address</label>
-							<input type="text" name="c_address" class="form-control" required="required" data-validation-required-message="Please Enter Company Address "/>
-						</div>
-						<div class="form-group col-md-6 p-l">
-							<label>Email</label>
-							<div class="input-group">
-							<div class="input-group-addon">https://</div>
-							<input type="text" name="c_email" class="form-control" required="required"  data-validation-required-message="Please Enter The Email Address"/>
-						</div>
+							<label>Website (Optional)</label>
+								<input type="text" name="c_web" class="form-control" placeholder="eg. http://www.example.com" />
 						</div>
 						<div class="form-group col-md-6 p-r">
 							<label>Phone Number</label>
 							<input type="text" name="c_phone" class="form-control" required="required" data-validation-required-message="Please Enter The Phone Number" />
 						</div>
 						<div class="form-group col-md-6 p-l">
-							<label>Website (Optional)</label>
-								<input type="text" name="c_web" class="form-control" placeholder="eg. http://www.example.com" />
+							<label>Address</label>
+							<input type="text" name="c_address" class="form-control" required="required" data-validation-required-message="Please Enter Company Address "/>
 						</div>
 						<div class="form-group col-md-6 p-r">
 							<label>Company Logo <span>(max. file size 3MB)</span></label>
@@ -151,10 +134,6 @@ include(SHARED_PATH . '/public_header.php');
 							<label>Google + <span>(Optional)</span></label>
 							<input type="text" name="c_gplus" class="form-control" placeholder="Enter page URL" />
 							<a href="#"><i class="fa fa-google"></i></a>
-						</div>
-						<div class="form-group col-md-12 p-l p-r">
-							<label>Job Description</label>
-							<textarea name="c_description" class="form-control" data-validation-required-message="Please Enter The Description" placeholder="Page Body" required ></textarea>
 						</div>
 						<div class="form-group col-md-12 p-l p-r">
 							<label>Business Details</label>

@@ -71,7 +71,7 @@ if (is_post_request()) {
 	$result = update_resume_by_id($resume);
 	if($result == true) {
     	$_SESSION['message'] = 'The resume was updated successfully.';
-    	redirect_to(url_for('resume.php?id=' . $id));
+    	redirect_to(url_for('profile.php?id=' . $id));
   	} else {
     	echo 'Errorrr .....';
     	//var_dump($errors);

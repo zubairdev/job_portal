@@ -25,7 +25,7 @@ if (is_post_request()) {
 			log_in_user($user);
 
 			$_SESSION['message'] = 'You have successfully created an account.';
-			redirect_to('c_resume.php');
+			redirect_to('resume.php');
 		}
 
 	}
@@ -108,11 +108,6 @@ if (is_post_request()) {
 											<div class="search_icon"><span class="ti-email"></span></div>
 										</div>
 										<div class="form-group">
-											<label> Username</label>
-											<input type="text" class="form-control" name="u_name" id="uname" required data-validation-required-message="Please enter your password" autocomplete="off">
-											<div class="search_icon"><span class="ti-user"></span></div>
-										</div>
-										<div class="form-group">
 											<label> Password</label>
 											<input type="password" class="form-control" name="u_pass" id="password" required data-validation-required-message="Please enter your password" autocomplete="off">
 											<div class="search_icon"><span class="ti-pin"></span></div>
@@ -133,11 +128,6 @@ if (is_post_request()) {
 											<label> Company E-mail</label>
 											<input type="email" class="form-control" name="com_email" id="email" required data-validation-required-message="Please enter your email address." autocomplete="off">
 											<div class="search_icon"><span class="ti-email"></span></div>
-										</div>
-										<div class="form-group">
-											<label> Username</label>
-											<input type="text" class="form-control" name="com_name" id="uname" required data-validation-required-message="Please enter your password" autocomplete="off">
-											<div class="search_icon"><span class="ti-user"></span></div>
 										</div>
 										<div class="form-group">
 											<label> Password</label>

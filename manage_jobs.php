@@ -8,7 +8,7 @@
 			<div class="col-md-12 text-center">
 				<div class="banner-heading">Manage Jobs</div>    
 			</div>  
-		</div>
+		</div> 
 	</div>
 </div>
 <main id="maincontent">
@@ -16,19 +16,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-3">
-					<div class="Resume">
-						<h1>My Account</h1>
-						<ul class="unstyled">
-							<li><a href="#"><i class="fa fa-caret-right"></i> My Profile</a></li>
-							<li><a href="#"><i class="fa fa-caret-right"></i> Edit Profile</a></li>
-							<li><a href="#"><i class="fa fa-caret-right"></i> Notifications</a></li>
-							<li><a href="#"><i class="fa fa-caret-right"></i> Favorite Candidates</a></li>
-							<li class="active"><a href="#"><i class="fa fa-caret-right"></i> Manage Jobs</a></li>
-							<li><a href="#"><i class="fa fa-caret-right"></i> Manage Applications</a></li>
-							<li><a href="#"><i class="fa fa-caret-right"></i> Change Password</a></li>
-							<li class="border-none"><a href="#"><i class="fa fa-caret-right"></i> Sign Out</a></li>
-						</ul>
-					</div>
+				<?php include(SHARED_PATH . '/employer_sidebar.php'); ?>
 				</div>
 				<div class="col-md-9">
 					<div class="panel-body">

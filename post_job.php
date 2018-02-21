@@ -16,18 +16,15 @@ if(is_post_request()) {
 
 	$job = [];
 	$job['company_id'] = $company_id ?? '';
-	$job['j_email'] = $_POST['j_email'] ?? '';
 	$job['j_title'] = $_POST['j_title'] ?? '';
 	$job['j_type'] = $_POST['j_type'] ?? '';
 	$job['j_category'] = $_POST['j_category'] ?? '';
 	$job['j_minexp'] = $_POST['j_minexp'] ?? '';
 	$job['j_maxexp'] = $_POST['j_maxexp'] ?? '';
-	$job['j_website'] = $_POST['j_website'] ?? '';
 	$job['j_minsalary'] = $_POST['j_minsalary'] ?? '';
 	$job['j_maxsalary'] = $_POST['j_maxsalary'] ?? '';
 	$job['j_location'] = $_POST['j_city'] ?? '';
 	$job['j_skills'] = $_POST['j_skills'] ?? '';
-	$job['j_hours'] = $_POST['j_hours'] ?? '';
 	$job['j_desp'] = $_POST['j_despt'] ?? '';
 	$job['j_resp'] = $_POST['j_resp'] ?? '';
 	$job['j_req'] = $_POST['j_req'] ?? '';
@@ -47,18 +44,15 @@ if(is_post_request()) {
 
 	$job = [];
 	$job['company_id'] = '';
-	$job['j_email'] = '';
 	$job['j_title'] = '';
 	$job['j_type'] = '';
 	$job['j_category'] = '';
 	$job['j_minexp'] = '';
 	$job['j_maxexp'] = '';
-	$job['j_website'] = '';
 	$job['j_minsalary'] = '';
 	$job['j_maxsalary'] = '';
 	$job['j_city'] = '';
 	$job['j_skills'] = '';
-	$job['j_hours'] = '';
 	$job['j_desp'] = '';
 	$job['j_resp'] = '';
 	$job['j_req'] = '';
@@ -93,14 +87,10 @@ include(SHARED_PATH . '/public_header.php'); ?>
 						<hr>
 						<form method="POST" enctype="multipart/form-data">
 							<div class="form-group col-md-6 p-l">
-								<label>Email</label>
-								<input type="text" name="j_email" class="form-control">
-							</div>
-							<div class="form-group col-md-6 p-r">
 								<label>Job Title</label>
 								<input type="text" name="j_title" class="form-control" />
 							</div>
-							<div class="form-group col-md-6 p-l">
+							<div class="form-group col-md-6 p-r">
 								<label>Job Type</label>
 								<select class="form-control" name="j_type">
 									<option>--- Choose a Category ---</option>
@@ -109,24 +99,26 @@ include(SHARED_PATH . '/public_header.php'); ?>
 									<option value="Free Lancer">Free Lancer</option>
 								</select>
 							</div>
-							<div class="form-group col-md-6 p-r">
+							<div class="form-group col-md-6 p-l">
 								<label>Job Category</label>
 								<select class="form-control" name="j_category">
 									<option>--- Choose a Category ---</option>
 									<option value="Web Developer">Web Developer</option>
 									<option value="Designer">Designer</option>
 									<option value="Marketing">Marketing</option>
+									<option value="Machine Worker">Machine Worker</option>
+									<option value="Social Media">Social Media</option>
 								</select>
 							</div>
-							<div class="form-group col-md-6 p-l">
+							<div class="form-group col-md-6 p-r">
 								<label>Minimun Expirence Required</label>
 								<input type="text" class="form-control" name="j_minexp" />
 							</div>
-							<div class="form-group col-md-6 p-r">
+							<div class="form-group col-md-6 p-l">
 								<label>Maximun Expirence Required</label>
 								<input type="text" class="form-control" name="j_maxexp" />
 							</div>
-							<div class="form-group col-md-6 p-l">
+							<div class="form-group col-md-6 p-r">
 								<label>Select City</label>
 								<select class="form-control" name="j_city">
 									<option>--- Choose a City ---</option>
@@ -214,9 +206,13 @@ include(SHARED_PATH . '/public_header.php'); ?>
 									<option value="Daulat Pur">Daulat Pur</option>
 									<option value="Daur">Daur</option>
 									<option value="Deh Pathaan">Deh Pathaan</option>
+									<option value="Lahore">Lahore</option>
+									<option value="Isalamabad">Isalamabad</option>
+									<option value="Karachi">Karachi</option>
+
 								</select>
 							</div>
-							<div class="form-group col-md-6 p-r">
+							<div class="form-group col-md-12 p-l">
 								<label>Skills</label>
 								<input type="text"  placeholder="Php, Laravel , MySql ..." class="form-control" name="j_skills" />
 							</div>
@@ -233,23 +229,15 @@ include(SHARED_PATH . '/public_header.php'); ?>
 								<textarea name="j_req" class="form-control" placeholder="Page Body"></textarea>
 							</div>
 							<div class="form-group col-md-6 p-l">
-								<label>Application Email/URL</label>
-								<input type="text" class="form-control" name="j_website" placeholder="Enter your email address or website URL" />
-							</div>
-							<div class="form-group col-md-6 p-r">
 								<label>Minimum Salery <span>(Optional)</span></label>
 								<input type="text" class="form-control" name="j_minsalary" placeholder="eg $ 2500" />
 							</div>
-							<div class="form-group col-md-6 p-l">
+							<div class="form-group col-md-6 p-r">
 								<label>Maximun Salery <span>(Optional)</span></label>
 								<input type="text" class="form-control" name="j_maxsalary" placeholder="eg $ 4500" />
 							</div>
-							<div class="form-group col-md-6 p-r">
-								<label>Hours Per Week <span>(Optional)</span></label>
-								<input type="text" class="form-control" name="j_hours" placeholder="eg $ 45" />
-							</div>
 							<div class="col-md-12 p-l">
-								<button type="submit" name="submit" class="btn btn-default">Preview Your Resume</button>
+								<button type="submit" name="submit" class="btn btn-default">Preview</button>
 							</div>
 						</form>
 					</div>
