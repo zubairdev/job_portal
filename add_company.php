@@ -1,7 +1,7 @@
 <?php require_once('private/initialize.php');
 
 require_login();
-$_SESSION['u_id'];
+$_SESSION['u_id']; 
 $session_id = $_SESSION['u_id'];
 
 	// restrict company to open add company page again
@@ -9,6 +9,15 @@ $company = company_validation($session_id);
 $c_id = $company['c_id'];
 $user_id = $company['user_id'];
 $c_check = $company['c_check'];
+
+$sql = "SELECT * FROM user WHERE u_id = '$session_id'";
+$run = mysqli_query($db, $sql);
+$row = mysqli_fetch_assoc($run);
+$email = $row['u_email'];
+$company_name = $row['u_name'];
+
+echo "Email of company is : " .$email ."<br>";
+echo "Company Name is : " .$company_name;
 
 if ($c_check == 'insert') {
 	redirect_to(url_for('employer_detail.php?company=' . $c_id));
@@ -23,10 +32,12 @@ if ($c_check == 'insert') {
 		redirect_to(url_for('browse_jobs.php'));
 	}
 	echo "This is Status : " .$status;
-if (is_post_request()) {
+if (is_post_request()) { 
 
 	$company = [];
 	$company['user_id'] = $session_id ?? '';
+	$company['c_name'] = $_POST['c_name'] ?? '';
+	$company['c_email'] = $_POST['c_email'] ?? '';
 	$company['c_address'] = $_POST['c_address'] ?? '';
 	$company['c_phone'] = $_POST['c_phone'] ?? '';
 	$company['c_web'] = $_POST['c_web'] ?? '';
@@ -55,6 +66,8 @@ if (is_post_request()) {
 } else {
 
 	$company = [];
+	$company['c_name'] = '';
+	$company['c_email'] = '';
 	$company['c_address'] = '';
 	$company['c_phone'] = '';
 	$company['c_web'] = '';
@@ -99,6 +112,14 @@ include(SHARED_PATH . '/public_header.php');
 						<div class="panel-heading">Company Information</div>
 						<hr>
 						<form method="post" action="add_company.php" enctype="multipart/form-data">
+							<div class="form-group col-md-6 p-l">
+							<label>Company Name</label>
+								<input type="text" name="c_name" value="<?php echo $company_name; ?>" class="form-control"/>
+						</div>
+						<div class="form-group col-md-6 p-r">
+							<label>Company Email</label>
+							<input type="text" name="c_email" class="form-control" value="<?php echo $email; ?>" required="required" />
+						</div>
 						<div class="form-group col-md-6 p-l">
 							<label>Website (Optional)</label>
 								<input type="text" name="c_web" class="form-control" placeholder="eg. http://www.example.com" />

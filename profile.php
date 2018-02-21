@@ -111,14 +111,16 @@ include(SHARED_PATH . '/public_header.php');
                                         </div>
                                         <div class="page-heading">
                                             <h2>Education Information</h2>
-                                            <div class="contact_details col-md-6 p-l">
+                                            <div class="contact_details col-md-12 p-l">
                                                 <span><strong><?php echo $resume['r_inst1']; ?></strong></span>
                                                 <span><?php echo $resume['r_edu1']; ?></span>
                                                 <span><strong>Specilization:</strong> <?php echo $resume['r_splztn']; ?></span>
                                                 <span><?php echo $resume['r_year1']; ?></span>
                                                 <span><?php echo $resume['r_grade']; ?> Grade</span>
                                             </div>
-                                            <div class="contact_details col-md-6 p-l">
+
+                                            <div class="contact_details col-md-12 p-l">
+                                                <h4><strong>Intermediate</strong></h4>
                                                 <span><strong><?php echo $resume['r_inst2']; ?></strong></span>
                                                 <span><?php echo $resume['r_edu2']; ?></span>
                                                 <span><?php echo $resume['r_year2']; ?></span>
