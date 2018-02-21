@@ -1,4 +1,4 @@
-<?php
+<?php 
 function find_user_by_id($session_id) {
     global $db;
 
@@ -539,4 +539,37 @@ function view_jobs_of_company($id) {
     }
 }
 
+function view_all_candidates() {
+    global $db;
+
+    $sql = "SELECT * FROM resume";
+    $run = mysqli_query($db, $sql);
+    while($row =  mysqli_fetch_array($run)){
+        $fname = $row['r_fname'];
+        $lname = $row['r_lname'];
+        $title = $row['r_title'];
+        $skills = $row['r_skills'];
+        $about = $row['r_despt'];
+        $photo = $row['r_photo'];
+        echo "
+        <div class='sorting_content'>
+            <div class='tab-image img-res'><img src='images/candidates/$photo' alt='' class='img-responsive'></div>
+                    <div class='overflow'>
+                        <div class='text-shorting'>
+                                <h1>$fname $lname</h1>
+                                <ul class='unstyled'>
+                                    <li>$title</li>
+                                </ul>
+                        </div>
+                        <div class='bottom_text'>
+                            <div class='contact_details col-md-12 col-sm-12 p-l'>
+                                <span><strong>Skills: </strong > $skills</span>
+                            </div>
+                                <p class='col-md-12 p-l'>$about</p>
+                            </div>
+                        </div>
+        </div>";
+    }
+
+}
 ?>
